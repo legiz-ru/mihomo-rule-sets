@@ -2,7 +2,7 @@ mixed-port: 2080
 allow-lan: true
 tcp-concurrent: true
 enable-process: true
-find-process-mode: strict
+find-process-mode: always
 global-client-fingerprint: chrome
 mode: rule
 log-level: debug

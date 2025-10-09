@@ -90,6 +90,9 @@ payload:
   - PROCESS-NAME,EscapeFromTarkov.exe # Escape From Tarkov 
   - PROCESS-NAME,EscapeFromTarkovArena.exe # Escape From Tarkov - Arena
 
+  # Hunt: Showdown
+  - PROCESS-NAME,HuntGame.exe # Hunt: Showdown
+  
   # Античиты (группировка)
   - PROCESS-NAME,start_protected_game.exe # Apex Easy Anti-Cheat
   - PROCESS-NAME,BattleBitEAC.exe # BattleBit EAC
@@ -100,5 +103,6 @@ payload:
   - PROCESS-NAME,start_protected_game.exe # The FINALS anticheat start exe
   - PROCESS-NAME,EscapeFromTarkovArena_BE.exe # Escape From Tarkov - Arena Battle Eye Anticheat
   - PROCESS-NAME,EscapeFromTarkov_BE.exe # Escape From Tarkov Battle Eye Anticheat
+  - PROCESS-NAME,EasyAntiCheat_EOS.exe # Hunt: Showdown Easy Anti-Cheat
 
 

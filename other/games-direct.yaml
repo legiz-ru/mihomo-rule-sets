@@ -135,6 +135,7 @@ payload:
   - PROCESS-NAME,SGuardSvc64.exe
   - PROCESS-NAME,SGuardUpdate64.exe
   - PROCESS-NAME,ACE-Service64.exe
+  
   # Easy Anti-Cheat
   - PROCESS-NAME,start_protected_game.exe # Apex Legends, THE FINALS
   - PROCESS-NAME,EasyAntiCheat.exe
@@ -143,3 +144,10 @@ payload:
   - PROCESS-NAME,vgm.exe
   - PROCESS-NAME-REGEX,(?i).*vanguard.*
 
+  # FaceIT AC
+  - PROCESS-NAME,faceitservice.exe
+  - PROCESS-NAME,faceitclient.exe  
+
+  # FaceIT website
+  - DOMAIN-SUFFIX,faceit.com
+  - DOMAIN-SUFFIX,faceit-cdn.net

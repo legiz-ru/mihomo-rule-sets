@@ -276,3 +276,13 @@ payload:
  - PROCESS-NAME,ru.bkfon
  - PROCESS-NAME,ru.cian.main
  - PROCESS-NAME,ru.m2.squaremeter
+ - PROCESS-NAME,ru.winelab #Винлаб
+ - PROCESS-NAME,ru.smmd.superdelivery #Доставка супер, т.е. Купер в gplay
+ - PROCESS-NAME,ru.aisa.android.ekpv2 #Карта Петербуржца
+ - PROCESS-NAME,com.mobium12580.app #Пироговый дворик
+ - PROCESS-NAME,ru.smclinic.app.lk #СМ Клиника
+ - PROCESS-NAME,com.teremok.keys #Теремок
+ - PROCESS-NAME,ru.tokyocity.tokyocity #Tokio City
+ - PROCESS-NAME,com.tseh85 #Цех 85
+ - PROCESS-NAME,ru.plazius.cofix #Cofix
+ - PROCESS-NAME,com.avito.android #Avito

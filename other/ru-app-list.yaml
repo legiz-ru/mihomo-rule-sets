@@ -276,3 +276,13 @@ payload:
  - PROCESS-NAME,ru.bkfon
  - PROCESS-NAME,ru.cian.main
  - PROCESS-NAME,ru.m2.squaremeter
+ - PROCESS-NAME,ru.winelab
+ - PROCESS-NAME,ru.smmd.superdelivery
+ - PROCESS-NAME,ru.aisa.android.ekpv2
+ - PROCESS-NAME,com.mobium12580.app
+ - PROCESS-NAME,ru.smclinic.app.lk
+ - PROCESS-NAME,com.teremok.keys
+ - PROCESS-NAME,ru.tokyocity.tokyocity
+ - PROCESS-NAME,com.tseh85
+ - PROCESS-NAME,ru.plazius.cofix
+ - PROCESS-NAME,com.avito.android

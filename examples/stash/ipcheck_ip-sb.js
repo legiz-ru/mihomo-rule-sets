@@ -22,9 +22,9 @@ $httpClient.get(url, function(error, response, data) {
   let ip = jsonData.ip || "Неизвестный IP";
 
   body = {
-    title: "Информация о узле",
-    content: `${ip} | IP-адрес\n${isp} | Оператор связи\n${emoji}${country} - ${city} | Местоположение`,
-    icon: "globe.asia.australia.fill",
+    title: "Ваш VPN",
+    content: `${ip}\n${isp}n${emoji}${country} - ${city}`,
+    icon: "network.badge.shield.half.filled",
     backgroundColor: '#0C9DFA'
   };
 

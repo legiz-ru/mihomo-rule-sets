@@ -10,8 +10,8 @@ $httpClient.get(url, function(error, response, data){
 
     body = {
         title: "Ваш провайдер",
-        content: `${ip} | IP-данные\n${isp} | Оператор связи\n${emoji}${country} - ${city} | Местоположение`,
-        icon: "globe.asia.australia.fill",
+        content: `${ip}\n${isp}\n${emoji}${country} - ${city}`,
+        icon: "globe.europe.africa.fill",
         backgroundColor: '#0C9DFA'
     }
     $done(body);

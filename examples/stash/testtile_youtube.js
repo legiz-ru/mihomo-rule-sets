@@ -1,5 +1,4 @@
-// YouTube / YouTube Premium / YouTube Music availability tile
-// Основано на логике ipregion.sh (YOUTUBE, YOUTUBE_PREMIUM, YOUTUBE_MUSIC)
+// YouTube base availability + Google Global Cache instance
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36";
@@ -13,7 +12,6 @@ async function request(method, params) {
   });
 }
 
-// Базовая проверка доступности YouTube
 async function checkYouTubeBase() {
   const { error, response } = await request("GET", {
     url: "https://www.youtube.com/generate_204",
@@ -35,89 +33,29 @@ async function checkYouTubeBase() {
   };
 }
 
-// Проверка YouTube Premium + определение локации по данным YouTube
-async function checkYouTubePremium() {
+// Google Global Cache instance
+async function checkGGC() {
   const { error, response, data } = await request("GET", {
-    url: "https://www.youtube.com/premium?hl=en",
+    url: "https://redirector.googlevideo.com/report_mapping?di=no",
     headers: {
       "User-Agent": UA,
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "Accept": "text/plain,*/*;q=0.8",
     },
     timeout: 8,
   });
 
-  if (error || !response) {
-    return { ok: false, reason: "network" };
-  }
+  if (error || !data) return null;
 
-  const status = response.status || response.statusCode || 0;
-  if (status < 200 || status >= 400 || !data) {
-    return { ok: false, status };
-  }
-
-  // Локация YouTube — как в ipregion: countryCode из страницы Premium
-  let region = null;
-  try {
-    const matchCountry =
-      data.match(/"countryCode"\s*:\s*"([A-Z]{2})"/) ||
-      data.match(/"GL"\s*:\s*"([A-Z]{2})"/); // запасной вариант
-    if (matchCountry) region = matchCountry[1];
-  } catch (_) {}
-
-  // Проверка доступности Premium
-  // В английской версии, если нет, обычно есть текст "Premium is not available in your country"
-  const notAvailableRe =
-    /Premium is not available in your country|Premium isn't available in your country|not available in your country/i;
-  const premiumAvailable = !notAvailableRe.test(data);
-
-  return {
-    ok: true,
-    status,
-    region,
-    premiumAvailable,
-  };
-}
-
-// Проверка YouTube Music
-async function checkYouTubeMusic() {
-  const { error, response, data } = await request("GET", {
-    url: "https://music.youtube.com/?hl=en",
-    headers: {
-      "User-Agent": UA,
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-    },
-    timeout: 8,
-  });
-
-  if (error || !response) {
-    return { ok: false, reason: "network" };
-  }
-
-  const status = response.status || response.statusCode || 0;
-  if (status < 200 || status >= 400 || !data) {
-    return { ok: false, status };
-  }
-
-  const notAvailableRe =
-    /Music is not available in your country|Music isn't available in your country|not available in your country/i;
-  const musicAvailable = !notAvailableRe.test(data);
-
-  return {
-    ok: true,
-    status,
-    musicAvailable,
-  };
+  // ищем первый хост *.googlevideo.com
+  const match = data.match(/([a-z0-9\-]+\.googlevideo\.com)/i);
+  if (!match) return null;
+  return match[1];
 }
 
 async function main() {
-  const [base, premium, music] = await Promise.all([
-    checkYouTubeBase(),
-    checkYouTubePremium(),
-    checkYouTubeMusic(),
-  ]);
+  const [base, ggc] = await Promise.all([checkYouTubeBase(), checkGGC()]);
 
-  // Если вообще всё умерло по сети
-  if (!base.ok && premium.reason === "network" && music.reason === "network") {
+  if (!base.ok && !ggc) {
     $done({
       content: "Network Error",
       backgroundColor: "",
@@ -125,7 +63,6 @@ async function main() {
     return;
   }
 
-  // Тексты
   const lines = [];
 
   if (base.ok) {
@@ -135,35 +72,12 @@ async function main() {
     lines.push(`YouTube: ❌${s}`);
   }
 
-  if (premium.ok) {
-    lines.push(`Premium: ${premium.premiumAvailable ? "✅" : "❌"}`);
-    if (premium.region) {
-      lines.push(`Location (YT): ${premium.region}`);
-    }
-  } else {
-    const s = premium.status ? ` (HTTP ${premium.status})` : "";
-    lines.push(`Premium: ❌${premium.reason === "network" ? " Network" : s}`);
+  if (ggc) {
+    lines.push(`GGC: ${ggc}`);
   }
 
-  if (music.ok) {
-    lines.push(`Music: ${music.musicAvailable ? "✅" : "❌"}`);
-  } else {
-    const s = music.status ? ` (HTTP ${music.status})` : "";
-    lines.push(`Music: ❌${music.reason === "network" ? " Network" : s}`);
-  }
-
-  // Цвет фона:
-  // зелёный — всё доступно
-  // жёлтый — YouTube работает, но Premium или Music недоступны
-  // красный/дефолт — YouTube не работает
-  let backgroundColor = "";
-  if (base.ok && premium.ok && premium.premiumAvailable && music.ok && music.musicAvailable) {
-    backgroundColor = "#88A788"; // зелёный, как у ChatGPT
-  } else if (base.ok) {
-    backgroundColor = "#FF9F0A"; // жёлтый — частичная доступность
-  } else {
-    backgroundColor = "#FF3B30"; // красный — всё плохо
-  }
+  // стиль как на скрине — оранжевый, когда YouTube доступен
+  const backgroundColor = base.ok ? "#FF9F0A" : "";
 
   $done({
     content: lines.join("\n"),

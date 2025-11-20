@@ -46,7 +46,7 @@ function checkGuest() {
         title: "Reddit Guest",
         content: `Guest Access: ${icon}\nStatus: ${status || "N/A"}`,
         backgroundColor: bg,
-        icon: "person.crop.circle.badge.questionmark",
+        // без icon — возьмётся иконка из tiles
         url: "https://www.reddit.com"
       });
     }

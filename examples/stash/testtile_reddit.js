@@ -34,7 +34,7 @@ function checkReddit() {
         title: "Reddit",
         content: `Access: ${icon}\nStatus: ${status || "N/A"}`,
         backgroundColor: bg,
-        icon: "bubble.left.and.bubble.right.fill",
+        // ВАЖНО: без icon => используется иконка из tiles
         url: "https://www.reddit.com"
       });
     }

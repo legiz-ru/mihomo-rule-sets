@@ -1,8 +1,9 @@
-// Claude.com availability tile
+// Claude.com availability tile (fixed version)
 // Логика:
-//  - проверяем главную страницу claude.com
-//  - если попадаем на app-unavailable-in-region => регион не поддерживается
-//  - локацию берём из https://claude.ai/cdn-cgi/trace (loc=XX)
+// 1) GET https://claude.com/ c auto-redirect: false
+// 2) Если Location -> /app-unavailable-in-region => Unavailable
+// 3) Иначе, 2xx–3xx => Available
+// 4) Локация из https://claude.ai/cdn-cgi/trace (loc=XX)
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36";
@@ -29,13 +30,25 @@ async function getLocation() {
 
   if (error || !data) return null;
 
-  // формат строки: loc=FR
   const match = String(data).match(/loc=([A-Z]{2})/);
   return match ? match[1] : null;
 }
 
+function getLocationHeader(headers) {
+  if (!headers) return null;
+  let loc = null;
+  for (const k in headers) {
+    if (Object.prototype.hasOwnProperty.call(headers, k)) {
+      if (k.toLowerCase() === "location") {
+        loc = headers[k];
+        break;
+      }
+    }
+  }
+  return loc;
+}
+
 async function main() {
-  // Параллельно тянем доступность сайта и локацию
   const [siteRes, loc] = await Promise.all([
     request("GET", {
       url: "https://claude.com/",
@@ -45,12 +58,13 @@ async function main() {
           "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
       },
       timeout: 8,
+      // ВАЖНО: чтобы поймать редирект на app-unavailable-in-region
+      "auto-redirect": false,
     }),
     getLocation(),
   ]);
 
   const { error, response, data } = siteRes;
-
   const location = loc || "??";
 
   if (error || !response) {
@@ -62,15 +76,26 @@ async function main() {
   }
 
   const status = response.status || response.statusCode || 0;
+  const headers = response.headers || {};
+  const locationHeader = getLocationHeader(headers);
   const body = String(data || "").toLowerCase();
 
-  // Признаки "регион не поддерживается"
   let unavailable = false;
 
-  if (status === 403) {
+  // 1) Явный редирект на app-unavailable-in-region
+  if (
+    (status === 301 ||
+      status === 302 ||
+      status === 303 ||
+      status === 307 ||
+      status === 308) &&
+    locationHeader &&
+    locationHeader.includes("app-unavailable-in-region")
+  ) {
     unavailable = true;
   }
 
+  // 2) На всякий случай — если по какой-то причине попали сразу на страницу
   if (
     body.includes("app-unavailable-in-region") ||
     body.includes("unavailable in your region") ||
@@ -79,13 +104,9 @@ async function main() {
     unavailable = true;
   }
 
-  // 2xx–3xx и нет признаков бана => Available
-  if (status >= 200 && status < 400 && !unavailable) {
-    $done({
-      content: `Available (${location})`,
-      backgroundColor: "#88A788", // как у ChatGPT
-    });
-    return;
+  // 3) Жёсткий ban по коду
+  if (status === 403) {
+    unavailable = true;
   }
 
   if (unavailable) {
@@ -96,7 +117,16 @@ async function main() {
     return;
   }
 
-  // Любой другой странный случай
+  // 4) Всё, что 2xx–3xx без признаков бана — считаем доступным
+  if (status >= 200 && status < 400) {
+    $done({
+      content: `Available (${location})`,
+      backgroundColor: "#88A788", // как у ChatGPT tiles
+    });
+    return;
+  }
+
+  // Иные случаи — просто ошибка по HTTP
   $done({
     content: `Error (HTTP ${status}) (${location})`,
     backgroundColor: "",

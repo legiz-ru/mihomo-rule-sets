@@ -458,6 +458,7 @@ proxy:ipcidr:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/d
 
 # another mihomo rulesets
 - [mihomo rule-sets](https://github.com/MetaCubeX/meta-rules-dat/tree/meta) by MetaCubeX include: asn/geoip/geosite
+- [CDN-RuleSet](https://github.com/PentiumB/CDN-RuleSet) by PentiumB
 
 ## Stargazers over time
 [![Stargazers over time](https://starchart.cc/legiz-ru/mihomo-rule-sets.svg?variant=adaptive)](https://starchart.cc/legiz-ru/mihomo-rule-sets)

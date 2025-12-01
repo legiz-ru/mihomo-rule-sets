@@ -47,6 +47,8 @@
 +.ai-chat.bsg.brave.com
 +.ai.com
 +.airbrake.io
++.aircanada.com
++.akc.org
 +.alberta.ca
 +.alienwarearena.com
 +.allegro.pl
@@ -114,6 +116,7 @@
 +.aqicn.org
 +.arbat.media
 +.arc.intel.com
++.arc.net
 +.archive.ph
 +.archiveofourown.org
 +.arm.com
@@ -211,10 +214,12 @@
 +.cdn.id.supercell.com
 +.cdn.oaistatic.com
 +.cdn.web-platform.io
++.cdn2site.com
 +.cdnbunny.org
 +.cdninstagram.com
 +.cdromance.org
 +.cdw.com
++.censor.net
 +.censortracker.org
 +.census.gov
 +.certifytheweb.com
@@ -229,6 +234,8 @@
 +.checkout.buckaroo.nl
 +.cherta.media
 +.chess.com
++.chesscomfiles.com
++.chub.ai
 +.cici.com
 +.cisco.com
 +.cisecurity.org
@@ -256,10 +263,13 @@
 +.coingate.com
 +.coinpayments.net
 +.coinsbee.com
++.coldfilm.city
++.coldfilm.ink
 +.coldfilm.xyz
 +.colta.ru
 +.community.cisco.com
 +.community.sophos.com
++.connect.ngrok-agent.com
 +.contabo.com
 +.coomer.su
 +.copernicus.eu
@@ -270,6 +280,7 @@
 +.cpu-monkey.com
 +.credly.com
 +.crowdstrike.com
++.croxyproxy.com
 +.crunchbase.com
 +.crunchyroll.com
 +.csskor.ill.in.ua
@@ -283,6 +294,7 @@
 +.czx.to
 +.d.docs.live.net
 +.daemon-tools.cc
++.dailylviv.com
 +.danbooru.donmai.us
 +.darkproject.eu
 +.data-cdn.mbamupdates.com
@@ -310,6 +322,7 @@
 +.devexpress.com
 +.deviantart.com
 +.devops.com
++.diabrowser.com
 +.dice.com
 +.dickssportinggoods.com
 +.diffblue.com
@@ -367,6 +380,7 @@
 +.dreamhost.com
 +.dual-a-0001.a-msedge.net
 +.ducati.com
++.dumka.media
 +.dw.com
 +.dyson.com
 +.dyson.nl
@@ -392,6 +406,7 @@
 +.elements.envato.com
 +.elevenlabs.io
 +.elgiganten.se
++.eneba.com
 +.engagor.com
 +.entrust.com
 +.envato.com
@@ -399,6 +414,7 @@
 +.epicgames.com
 +.epidemz.net.co
 +.eporner.com
++.espreso.tv
 +.etahub.com
 +.etsy.com
 +.eu-iot-prod.aws.tcljd.com
@@ -445,6 +461,7 @@
 +.flipboard.com
 +.flir.com
 +.flir.eu
++.flisland.net
 +.flourish.studio
 +.fls.guru
 +.fluke.com
@@ -472,6 +489,7 @@
 +.freeimages.com
 +.freemedia.io
 +.freemyip.com
++.freeones.com
 +.fujitsu.com
 +.futurelearn.com
 +.fw-download.ubnt.com
@@ -507,11 +525,14 @@
 +.ggpht.com
 +.ghidra-sre.org
 +.ghostrc.game.idtech.services
++.gifyu.com
 +.github.com
 +.githubcopilot.com
 +.githubusercontent.com
 +.gitlab.com
 +.gitlab.io
++.glavred.info
++.glavred.net
 +.gllto.glpals.com
 +.global.fncstatic.com
 +.global.platform.seconddinnertech.com
@@ -551,6 +572,7 @@
 +.hackernoon.com
 +.hackmd.io
 +.halooglasi.com
++.happycolorapp.com
 +.hashicorp.com
 +.hashkey.com
 +.haydaygame.com
@@ -562,14 +584,20 @@
 +.hdkinoteatr.com
 +.hdrezka.ac
 +.hdrezka.ag
++.hdrezka.app
 +.hdrezka.fm
 +.hdrezka.me
++.hdrezka.tech
++.hdrezka.tv
++.hdrzk.org
++.hdstudio.org
 +.healthline.com
 +.helm.releases.hashicorp.com
 +.hentai-foundry.com
 +.herokucdn.com
 +.hetzner.com
 +.hex-rays.com
++.hitomi.la
 +.hollisterco.com
 +.holod.global.ssl.fastly.net
 +.holod.media
@@ -580,6 +608,7 @@
 +.hostgator.com
 +.hostinger.com
 +.hotels.com
++.housebrand.com
 +.hpe.com
 +.hqporner.com
 +.hromadske.ua
@@ -646,6 +675,7 @@
 +.is.fi
 +.island-of-pleasure.site
 +.istories.media
++.itch.io
 +.itninja.com
 +.itsmycity.ru
 +.jabra.com
@@ -680,6 +710,7 @@
 +.kinogo.la
 +.kinogo.uk
 +.kinokopilka.pro
++.kinopub.me
 +.kinovod.net
 +.kinozal.guru
 +.kinozal.me
@@ -718,6 +749,7 @@
 +.licdn.com
 +.lidarr.audio
 +.lifehacker.com
++.liga.net
 +.lightburnsoftware.com
 +.lightning.ai
 +.linear.app
@@ -739,6 +771,8 @@
 +.lostfilm.run
 +.lostfilm.today
 +.lostfilm.tv
++.lostfilm.tw
++.lostfilm.uno
 +.lostfilm.win
 +.lostfilmtv2.site
 +.lowes.com
@@ -762,6 +796,7 @@
 +.mangahub.ru
 +.mangapark.net
 +.manus.im
++.manybooks.net
 +.manyvids.com
 +.marketplace.atlassian.com
 +.marvelsnap.com
@@ -781,6 +816,7 @@
 +.medium.com
 +.meduza.io
 +.meest-shop.com
++.mega.nz
 +.megapeer.ru
 +.megapeer.vip
 +.megogo.net
@@ -806,6 +842,7 @@
 +.miracleptr.wordpress.com
 +.mixcloud.com
 +.mobile.events.data.microsoft.com
++.modrinth.com
 +.moneypuck.com
 +.mongodb.com
 +.mongodb.net
@@ -826,6 +863,7 @@
 +.musixmatch.com
 +.mw2.wiki
 +.my.atlassian.com
++.myanimelist.net
 +.mydoramy.club
 +.myfonts.com
 +.myheritage.com
@@ -841,6 +879,7 @@
 +.ndi.tv
 +.neformat.com.ua
 +.neo4j.com
++.netacad.com
 +.netapp.com
 +.netflix.ca
 +.netflix.com
@@ -888,9 +927,11 @@
 +.novaya.no
 +.novayagazeta.eu
 +.novayagazeta.ru
++.novyny.live
 +.nsf.gov
 +.ntc.party
 +.ntp.msn.com
++.nude-moon.org
 +.nvidia.com
 +.nxp.com
 +.nyaa.si
@@ -898,6 +939,7 @@
 +.oaistatic.com
 +.oaiusercontent.com
 +.oasis.app
++.obozrevatel.com
 +.oclc.org
 +.ocstore.com
 +.octopart-clicks.com
@@ -923,6 +965,7 @@
 +.openrouter.ai
 +.opensanctions.org
 +.opensea.io
++.opentrackr.org
 +.openwrt.wk.cz
 +.opposition-news.com
 +.oracle.com
@@ -1003,6 +1046,7 @@
 +.portal.bgpmon.net
 +.portal.lviv.ua
 +.posle.media
++.posthog.com
 +.postimees.ee
 +.pravda.com
 +.pravda.com.ua
@@ -1050,6 +1094,7 @@
 +.reactflow.dev
 +.readdle.com
 +.readybot.io
++.realbooru.com
 +.realist.online
 +.recraft.ai
 +.reddxxx.com
@@ -1073,12 +1118,17 @@
 +.republic.ru
 +.research.net
 +.resp.app
++.restream.io
 +.returnyoutubedislikeapi.com
 +.reve.art
 +.reverb.com
 +.rezka-ua.in
 +.rezka.ag
++.rezka.cc
++.rezka.fi
++.rezka.land
 +.rezka.my
++.rezka.tv
 +.rezkify.com
 +.rezonans.media
 +.rf.dobrochan.net
@@ -1099,6 +1149,7 @@
 +.rublacklist.net
 +.ruckuswireless.com
 +.rule34.art
++.rule34.us
 +.rule34.xxx
 +.rus-media.org
 +.rus.delfi.ee
@@ -1193,6 +1244,7 @@
 +.simplix.info
 +.singlekey-id.com
 +.site.com
++.siteground.com
 +.skat.media
 +.sketchup.com
 +.skiff.com
@@ -1220,6 +1272,7 @@
 +.sobesednik.ru
 +.software.cisco.com
 +.solarwinds.com
++.sonara.ai
 +.sophos.com
 +.sora.com
 +.sotaproject.com
@@ -1243,6 +1296,7 @@
 +.st.com
 +.st.kinovod.net
 +.stalker2.com
++.startmail.com
 +.startpage.com
 +.static-ss.xvideos-cdn.com
 +.static.cdninstagram.com
@@ -1316,6 +1370,7 @@
 +.theins.ru
 +.themoviedb.org
 +.thepiratebay.org
++.theporndude.com
 +.thesassway.com
 +.thetruestory.news
 +.thinkpads.com
@@ -1332,6 +1387,7 @@
 +.tiktokd.net
 +.tiktokd.org
 +.tiktokv.com
++.tiktokv.eu
 +.tiktokv.us
 +.tiktokw.us
 +.timberland.com
@@ -1354,13 +1410,13 @@
 +.trae.ai
 +.trailblazer.me
 +.trailhead.com
++.transferwise.com
 +.trellix.com
 +.tria.ge
 +.trionworlds.com
 +.trueblackmetalradio.com
 +.truthsocial.com
 +.tsmc.com
-+.ttvnw.net
 +.ttwstatic.com
 +.turbobit.net
 +.tuta.com
@@ -1372,6 +1428,9 @@
 +.tvrain.tv
 +.tweetdeck.com
 +.twimg.com
++.twin.me
++.twinlife-systems.com
++.twinme.com
 +.twirpx.com
 +.twitpic.com
 +.twitter.biz
@@ -1393,6 +1452,7 @@
 +.ufile.io
 +.ui.ill.in.ua
 +.uizard.io
++.ukdevilz.com
 +.ukr.net
 +.ukr.radio
 +.ukrtelcdn.net
@@ -1405,6 +1465,7 @@
 +.unian.ua
 +.uniongang.tv
 +.unscreen.com
++.unsplash.com
 +.upwork.com
 +.usa.one
 +.usatoday.com
@@ -1438,6 +1499,7 @@
 +.vndb.org
 +.voanews.com
 +.voidboost.cc
++.volet.com
 +.volkswagen-classic-parts.com
 +.vot-tak.tv
 +.vpngate.net
@@ -1462,6 +1524,7 @@
 +.weather.com
 +.webex.com
 +.weblance.com.ua
++.webmd.com
 +.webnames.ca
 +.webscraper.io
 +.webtoons.com
@@ -1478,6 +1541,7 @@
 +.windguru.cz
 +.windows10spotlight.com
 +.windsurf.com
++.wise.com
 +.wixmp.com
 +.wk.cz
 +.wonderclub.com
@@ -1549,6 +1613,7 @@
 +.youtubei.googleapis.com
 +.youtubekids.com
 +.yt-video-upload.l.google.com
++.yt.be
 +.yt3.googleusercontent.com
 +.ytimg.com
 +.ytimg.l.google.com
@@ -1556,6 +1621,7 @@
 +.yummyani.me
 +.zahav.ru
 +.zapier.com
++.zaxid.net
 +.zbigz.com
 +.zedge.net
 +.zendesk.com
@@ -1564,6 +1630,8 @@
 +.zetalliance.org
 +.zetflix.online
 +.zf.com
++.zimbra.com
++.zimbra.org
 +.znanija.com
 +.zohomail.com
 +.zona.media

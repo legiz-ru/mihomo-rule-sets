@@ -1,89 +1,87 @@
 payload:
+  # Unreal Engine games
+  - PROCESS-NAME-REGEX,(?i).*Win64-Shipping.*
 
-  # Aimbeast (тренировочный шутер)
-  - PROCESS-NAME,Aimbeast.exe # Aimbeast launcher
-  - PROCESS-NAME,Aimbeast-Win64-Shipping.exe # Aimbeast itself
+  # Aimbeast
+  - PROCESS-NAME-REGEX,Aimbeast.* 
 
   # Among Us
-  - PROCESS-NAME,Among Us.exe # Among Us
+  - PROCESS-NAME,Among Us.exe
 
   # Apex Legends
-  - PROCESS-NAME,ApexLauncher.exe # Apex Legends launcher
+  - PROCESS-NAME,ApexLauncher.exe # Launcher
   - PROCESS-NAME,r5apex_dx12.exe # Apex Legends (DX12)
 
   # BattleBit Remastered
-  - PROCESS-NAME,BattleBit.exe # BattleBit Remastered
+  - PROCESS-NAME-REGEX,BattleBit.*
 
   # Content Warning
-  - PROCESS-NAME,Content Warning.exe # Content Warning
+  - PROCESS-NAME,Content Warning.exe
 
   # Counter-Strike 2
-  - PROCESS-NAME,cs2.exe # Counter-Strike 2
+  - PROCESS-NAME,cs2.exe
 
-  # Euro Truck Simulator 2
-  - PROCESS-NAME,eurotrucks2.exe # Euro Truck Simulator 2
+  # Euro Truck Simulator 2 / American Trucks Simulator
+  - PROCESS-NAME,eurotrucks2.exe
+  - PROCESS-NAME,amtrucks.exe
 
   # Party Animals
-  - PROCESS-NAME,PartyAnimals.exe # Party Animals
+  - PROCESS-NAME,PartyAnimals.exe
 
   # PEAK
-  - PROCESS-NAME,PEAK.exe # PEAK
+  - PROCESS-NAME,PEAK.exe
 
   # PUBG (PlayerUnknown's Battlegrounds)
-  - PROCESS-NAME,ExecPubg.exe # PUBG launcher
-  - PROCESS-NAME,TslGame.exe # PUBG main process
-  - PROCESS-NAME,TslGame_BE.exe # PUBG BattleEye
-  - PROCESS-NAME,TslGame_ZK.exe # PUBG Anti-Cheat module
+  - PROCESS-NAME,ExecPubg.exe # Launcher
+  - PROCESS-NAME-REGEX,TslGame.* # Game
 
   # REPO
-  - PROCESS-NAME,REPO.exe # REPO
+  - PROCESS-NAME,REPO.exe
 
-  # Minecraft (Java)
-  - PROCESS-NAME,javaw.exe # Minecraft (⚠️ зависит от версии Java)
+  # Minecraft
+  - PROCESS-NAME,javaw.exe # Minecraft (Java Edition)
+  - PROCESS-NAME,Minecraft.exe  # Minecraft (Bedrock Edition)
 
   # FragPunk
-  - PROCESS-NAME,FragPunk.exe # FragPunk
+  - PROCESS-NAME,FragPunk.exe
 
   # Dead by Daylight
-  - PROCESS-NAME,DeadByDaylight-Win64-Shipping.exe # Dead by Daylight
-  - PROCESS-NAME,DeadByDaylight.exe # Dead by Daylight launcher
+  - PROCESS-NAME-REGEX,DeadByDaylight.*
 
   # Dota 2
-  - PROCESS-NAME,dota2.exe # Dota 2
+  - PROCESS-NAME,dota2.exe
 
-  # GTA V
-  - PROCESS-NAME,GTA5.exe # GTA V
-  # GTA V мультиплееры
+  # Deadlock
+  - PROCESS-NAME,deadlock.exe
+
+  # GTA V (online + other multiplayer solutions)
+  - PROCESS-NAME-REGEX,.*GTA5.* # GTA V / Online
   - PROCESS-NAME,altv.exe # alt:V (Majestic RP)
   - PROCESS-NAME,altv-webengine.exe # alt:V webengine (Majestic RP)
-  - PROCESS-NAME-REGEX,(?i).*ragemp.* # RageMP (альтернативный мультиплеер для GTA V)
+  - PROCESS-NAME,FiveM.exe # FiveM
+  - PROCESS-NAME-REGEX,(?i).*ragemp.* # RageMP
   - PROCESS-NAME-REGEX,(?i).*Majestic.* # Majestic RP
-  # Rockstar
   - PROCESS-NAME-REGEX,(?i).*Rockstar.* # Rockstar Games Launcher
   - PROCESS-NAME-REGEX,(?i).*SocialClub.* # Rockstar Social Club
 
   # Team Fortress 2
-  - PROCESS-NAME,tf.exe # Team Fortress 2 (x86)
-  - PROCESS-NAME,tf_win64.exe # Team Fortress 2 (x64)
+  - PROCESS-NAME,tf.exe
+  - PROCESS-NAME,tf_win64.exe
 
   # Half-Life 2
-  - PROCESS-NAME,hl2.exe # Half-Life 2
+  - PROCESS-NAME,hl2.exe
 
   # Rainbow Six Siege
-  - PROCESS-NAME,RainbowSix.exe # Rainbow Six Siege
+  - PROCESS-NAME,RainbowSix.exe
+
+  # osu!
+  - PROCESS-NAME,osu!.exe
+
+  # Quaver
+  - PROCESS-NAME,Quaver.exe
 
   # Valorant
-  - PROCESS-NAME,VALORANT-Win64-Shipping.exe # Valorant
-
-  # Helldivers 2
-  - PROCESS-NAME,helldivers2.exe # Helldivers 2
-  - PROCESS-NAME,crs-handler.exe # crash reports Helldivers 2
-
-  # The FINALS
-  - PROCESS-NAME,Discovery.exe # The FINALS
-  
-  # Rust (не указан явно выше)
-  - PROCESS-NAME-REGEX,(?i).*RustClient.* # Rust
+  - PROCESS-NAME,VALORANT-Win64-Shipping.exe
 
   # Escape from Tarkov
   - PROCESS-NAME,BsgLauncher.exe # EFT Launcher
@@ -104,5 +102,71 @@ payload:
   - PROCESS-NAME,EscapeFromTarkovArena_BE.exe # Escape From Tarkov - Arena Battle Eye Anticheat
   - PROCESS-NAME,EscapeFromTarkov_BE.exe # Escape From Tarkov Battle Eye Anticheat
   - PROCESS-NAME,EasyAntiCheat_EOS.exe # Hunt: Showdown Easy Anti-Cheat
+  # HELLDIVERS 2
+  - PROCESS-NAME,helldivers2.exe
+  - PROCESS-NAME,crs-handler.exe # Crash reports
 
+  # THE FINALS
+  - PROCESS-NAME,Discovery.exe
 
+  # Rust
+  - PROCESS-NAME-REGEX,(?i).*RustClient.*
+
+  # Escape from Tarkov
+  - PROCESS-NAME,BsgLauncher.exe
+  - PROCESS-NAME-REGEX,EscapeFromTarkov.*
+
+  # Arena Breakout: Infinite
+  - PROCESS-NAME,UAGame.exe
+
+  # Marvel Rivals
+  - PROCESS-NAME,MarvelRivals_Launcher.exe
+  - PROCESS-NAME,Marvel-Win64-Shipping.exe
+
+  # Overwatch 2
+  - PROCESS-NAME,Overwatch.exe
+  - PROCESS-NAME,Battle.net.exe
+  - PROCESS-NAME,BlizzardBrowser.exe
+
+  # Phasmophobia
+  - PROCESS-NAME,Phasmophobia.exe
+
+  # HoYoverse
+  - PROCESS-NAME,GenshinImpact.exe
+  - PROCESS-NAME,ZenlessZoneZero.exe
+  - PROCESS-NAME,StarRail.exe
+  - PROCESS-NAME,BH3.exe
+  - PROCESS-NAME,ZFGameBrowser.exe # In-game webview
+  - PROCESS-NAME,HYUpdater.exe
+  - PROCESS-NAME,HYPHelper.exe
+  - PROCESS-NAME,HYP.exe
+
+  # Umamusume: Pretty Derby
+  - PROCESS-NAME,UmamusumePrettyDerby.exe
+
+  # Wuthering Waves
+  - PROCESS-NAME,Wuthering Waves.exe
+  - PROCESS-NAME,KRWebView.exe # In-game webview
+  - PROCESS-NAME,KRSDKExternal.exe
+
+  # Anti-Cheat Expert
+  - PROCESS-NAME,SGuard64.exe
+  - PROCESS-NAME,SGuardSvc64.exe
+  - PROCESS-NAME,SGuardUpdate64.exe
+  - PROCESS-NAME,ACE-Service64.exe
+  
+  # Easy Anti-Cheat
+  - PROCESS-NAME,start_protected_game.exe # Apex Legends, THE FINALS
+  - PROCESS-NAME,EasyAntiCheat.exe
+  # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,vgc.exe
+  - PROCESS-NAME,vgm.exe
+  - PROCESS-NAME-REGEX,(?i).*vanguard.*
+
+  # FaceIT AC
+  - PROCESS-NAME,faceitservice.exe
+  - PROCESS-NAME,faceitclient.exe  
+
+  # FaceIT website
+  - DOMAIN-SUFFIX,faceit.com
+  - DOMAIN-SUFFIX,faceit-cdn.net

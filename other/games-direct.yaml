@@ -83,6 +83,25 @@ payload:
   # Valorant
   - PROCESS-NAME,VALORANT-Win64-Shipping.exe
 
+  # Escape from Tarkov
+  - PROCESS-NAME,BsgLauncher.exe # EFT Launcher
+  - PROCESS-NAME,EscapeFromTarkov.exe # Escape From Tarkov 
+  - PROCESS-NAME,EscapeFromTarkovArena.exe # Escape From Tarkov - Arena
+
+  # Hunt: Showdown
+  - PROCESS-NAME,HuntGame.exe # Hunt: Showdown
+  
+  # Античиты (группировка)
+  - PROCESS-NAME,start_protected_game.exe # Apex Easy Anti-Cheat
+  - PROCESS-NAME,BattleBitEAC.exe # BattleBit EAC
+  - PROCESS-NAME,EasyAntiCheat.exe # Easy Anti-Cheat
+  - PROCESS-NAME,TslGame_BE.exe # PUBG BattleEye
+  - PROCESS-NAME,TslGame_ZK.exe # PUBG Anti-Cheat module
+  - PROCESS-NAME-REGEX,(?i).*Vanguard.* # Valorant Vanguard Anti-Cheat
+  - PROCESS-NAME,start_protected_game.exe # The FINALS anticheat start exe
+  - PROCESS-NAME,EscapeFromTarkovArena_BE.exe # Escape From Tarkov - Arena Battle Eye Anticheat
+  - PROCESS-NAME,EscapeFromTarkov_BE.exe # Escape From Tarkov Battle Eye Anticheat
+  - PROCESS-NAME,EasyAntiCheat_EOS.exe # Hunt: Showdown Easy Anti-Cheat
   # HELLDIVERS 2
   - PROCESS-NAME,helldivers2.exe
   - PROCESS-NAME,crs-handler.exe # Crash reports

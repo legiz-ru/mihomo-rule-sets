@@ -1,0 +1,344 @@
+proxy-groups:
+  - name: 🌍 VPN
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hijacking.png
+    type: select
+    proxies:
+      - ⚡️ Fastest
+      # LEAVE THIS LINE!
+  - name: ▶️ YouTube
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
+    type: select
+    proxies:
+      - 🌍 VPN
+      # LEAVE THIS LINE!
+  - name: ✉️ Messengers
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Mail.png
+    type: select
+    proxies:
+      - 🌍 VPN
+      # LEAVE THIS LINE!
+  # - name: 💬 Discord
+  #   icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Discord.png
+  #   type: select
+  #   proxies:
+  #     - 🌍 VPN
+  #     # LEAVE THIS LINE!
+  - name: ⚡️ Fastest
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png
+    type: url-test
+    interval: 300
+    proxies: # LEAVE THIS LINE!
+
+proxies: # LEAVE THIS LINE!
+
+rule-providers:
+  facebook-ips:
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/facebook.mrs
+  whatsapp-domains:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/whatsapp.mrs
+  telegram-ips:
+    behavior: ipcidr
+    format: mrs
+    interval: 86400
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/telegram.mrs
+  telegram-domains:
+    behavior: domain
+    format: mrs
+    interval: 86400
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/telegram.mrs
+  discord_domains:
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/discord.mrs
+    interval: 86400
+  discord_voiceips:
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/legiz-ru/mihomo-rule-sets/main/other/discord-voice-ip-list.mrs
+    interval: 86400
+  youtube:
+    behavior: domain
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/youtube.mrs
+    interval: 86400
+  torrent-trackers:
+    behavior: domain
+    format: mrs
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/torrent-trackers.mrs
+    interval: 86400
+  torrent-clients:
+    behavior: classical
+    format: yaml
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/torrent-clients.yaml
+    interval: 86400
+  cloudflare-ips:
+    behavior: ipcidr
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cloudflare.mrs
+    interval: 86400
+  cloudflare-domains:
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cloudflare.mrs
+    interval: 86400
+  ru-bundle:
+    behavior: domain
+    format: mrs
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rule.mrs
+    interval: 86400
+
+rules:
+  - SCRIPT,quic,REJECT
+  - DOMAIN,api.ip.sb,🌍 VPN # location checker on statistic main page
+  - DOMAIN,ip-api.com,DIRECT
+  - RULE-SET,torrent-trackers,DIRECT
+  - RULE-SET,torrent-clients,DIRECT
+  - DOMAIN-SUFFIX,iphone-ld.apple.com,DIRECT
+  - DOMAIN-SUFFIX,lcdn-locator.apple.com,DIRECT
+  - DOMAIN-SUFFIX,lcdn-registration.apple.com,DIRECT
+  - DOMAIN-SUFFIX,push.apple.com,DIRECT
+  - RULE-SET,youtube,▶️ YouTube
+  - RULE-SET,discord_voiceips,✉️ Messengers
+  - RULE-SET,discord_domains,✉️ Messengers
+  - RULE-SET,telegram-ips,✉️ Messengers
+  - RULE-SET,telegram-domains,✉️ Messengers
+  - RULE-SET,facebook-ips,✉️ Messengers
+  - RULE-SET,whatsapp-domains,✉️ Messengers
+  - RULE-SET,ru-bundle,🌍 VPN
+  - RULE-SET,cloudflare-ips,🌍 VPN
+  - RULE-SET,cloudflare-domains,🌍 VPN
+  - MATCH,DIRECT
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
+dns:
+  nameserver-policy:
+    '+.apple.com': system
+    '+.icloud.com': system
+    '+.apzones.com': system
+    '+.mzstatic.com': system
+    '+.vertexsmb.com': system
+    'apple-relay.cloudflare.com': system
+    'apple-relay.fastly-edge.com': system
+    '+.apple-mapkit.com': system
+    '+.apple-cloudkit.com': system
+    'cp4.cloudflare.com': system
+    'crl3.digicert.com': system
+    'crl4.digicert.com': system
+    'ocsp.digicert.cn': system
+    'ocsp.digicert.com': system
+    'token.safebrowsing.apple': system
+    '+.ru': system
+    '+.su': system
+    '+.xn--80adxhks': system
+    '+.xn--80asehdb': system
+    '+.xn--80aswg': system
+    '+.xn--c1avg': system
+    '+.xn--d1acj3b': system
+    '+.xn--p1acf': system
+    '+.xn--p1ai': system
+    '+.psk': system
+    '+.yandex': system
+    '+.emias.info': system
+    '+.boosty.to': system
+    '+.donationalerts.com': system
+    '+.memealerts.com': system
+    '+.mycdn.me': system
+    '+.ozonusercontent.com': system
+    '+.mradx.net': system
+    '+.mvk.com': system
+    '+.userapi.com': system
+    '+.vk-apps.com': system
+    '+.vk-cdn.me': system
+    '+.vk-cdn.net': system
+    '+.vk-portal.net': system
+    '+.vk.cc': system
+    '+.vk.com': system
+    '+.vk.company': system
+    '+.vk.design': system
+    '+.vk.link': system
+    '+.vk.me': system
+    '+.vk.team': system
+    '+.vkcache.com': system
+    '+.vkgo.app': system
+    '+.vklive.app': system
+    '+.vkmessenger.app': system
+    '+.vkmessenger.com': system
+    '+.vkuser.net': system
+    '+.vkuseraudio.com': system
+    '+.vkuseraudio.net': system
+    '+.vkuserlive.net': system
+    '+.vkuservideo.com': system
+    '+.vkuservideo.net': system
+    '+.5post.market': system
+    '+.chizhik.club': system
+    '+.okolo.app': system
+    '+.perekrestok.com': system
+    '+.x5.ai': system
+    '+.x5.com': system
+    '+.x5.digital': system
+    '+.x5.group': system
+    '+.x5.media': system
+    '+.x5.team': system
+    '+.x5.tech': system
+    '+.x5static.net': system
+    '+.yandex.fi': system
+    '+.yastatic.net': system
+    '+.naydex.net': system
+    '+.yandex.fr': system
+    '+.yandex-bank.net': system
+    '+.yandex.aero': system
+    '+.yandex.az': system
+    '+.yandex.by': system
+    '+.yandex.cloud': system
+    '+.yandex.jobs': system
+    '+.yandex.com': system
+    '+.yandexwebcache.org': system
+    '+.yandexcom.net': system
+    '+.yandexcloud.net': system
+    '+.yandexadexchange.net': system
+    '+.yandex.kg': system
+    '+.yandex.de': system
+    '+.yandex.ee': system
+    '+.yandex.eu': system
+    '+.rostaxi.org': system
+    '+.yandex.uz': system
+    '+.yandex.kz': system
+    '+.yandex.lt': system
+    '+.yandex.lv': system
+    '+.yandex.md': system
+    '+.yandex.net': system
+    '+.yandex.org': system
+    '+.yandex.pl': system
+    '+.yandex.st': system
+    '+.yandex.sx': system
+    '+.yandex.tj': system
+    '+.yandex.tm': system
+    '+.yandex.ua': system
+    '+.yandex.com.ua': system
+    '+.yandex.com.tr': system
+    '+.yandex.com.ge': system
+    '+.yandex.com.am': system
+    '+.yandex.co.il': system
+    '+.yandex-images.clstorage.net': system
+  default-nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+  nameserver:
+    - 1.1.1.1
+    - 1.0.0.1
+log-level: warning
+mode: rule
+
+tiles:
+  - name: IPCheck-Tile-Proxy
+    interval: 7200
+  - name: IPCheck-Tile-Direct
+    interval: 7200
+
+  - name: YouTube-Check
+    title: YouTube
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
+    collapsed: true
+    url: https://www.youtube.com
+  - name: YouTube-Music-Check
+    title: YouTube Music
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube_Music.png
+    collapsed: true
+    url: https://music.youtube.com
+  - name: YouTube-Premium-Check
+    title: YouTube Premium
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube_Letter.png
+    collapsed: true
+    url: https://www.youtube.com/premium
+  - name: TikTok-Check
+    title: TikTok
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/TikTok.png
+    collapsed: true
+    url: https://www.tiktok.com
+
+  - name: ChatGPT-Web-Check
+    title: ChatGPT Web
+    icon: https://fastly.jsdelivr.net/gh/StashNetworks/misc@main/collapsed-tiles/img/chatgpt.png
+    collapsed: true
+    url: https://chatgpt.com
+  - name: ChatGPT-App-Check
+    title: ChatGPT App
+    icon: https://fastly.jsdelivr.net/gh/StashNetworks/misc@main/collapsed-tiles/img/chatgpt.png
+    collapsed: true
+    url: https://chatgpt.com
+  - name: Gemini-Check
+    title: Gemini
+    icon: https://cdn.jsdmirror.com/gh/xiyingruyi/misc@main/collapsed-tiles/img/gemini-color.png
+    collapsed: true
+    url: https://gemini.google.com
+  - name: Claude-Check
+    title: Claude
+    icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/claude.png
+    collapsed: true
+    url: https://claude.com
+
+  - name: Google-Search-Captcha-Check
+    title: Google Search
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png
+    collapsed: true
+    url: https://www.google.com
+  - name: Netflix-Check
+    title: Netflix
+    icon: https://fastly.jsdelivr.net/gh/StashNetworks/misc@main/collapsed-tiles/img/netflix.png
+    collapsed: true
+    url: https://www.netflix.com
+
+
+  - name: Reddit-Check
+    title: Reddit
+    icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/reddit.png
+    collapsed: true
+    url: https://www.reddit.com
+  - name: Reddit-Guest-Check
+    title: Reddit Guest
+    icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/reddit.png
+    collapsed: true
+    url: https://www.reddit.com
+
+script-providers:
+  IPCheck-Tile-Proxy:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/ipcheck_ip-sb.js
+  IPCheck-Tile-Direct:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/ipcheck_ip-api.js
+
+  YouTube-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_youtube.js
+  YouTube-Music-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_youtube_music.js
+  YouTube-Premium-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_youtube_premium.js
+  TikTok-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_tiktok.js
+
+  ChatGPT-Web-Check:
+    url: https://fastly.jsdelivr.net/gh/StashNetworks/misc@main/collapsed-tiles/script/chatgpt-web.js
+  ChatGPT-App-Check:
+    url: https://fastly.jsdelivr.net/gh/StashNetworks/misc@main/collapsed-tiles/script/chatgpt-app.js
+  Gemini-Check:
+    url: https://cdn.jsdmirror.com/gh/xiyingruyi/misc@main/collapsed-tiles/script/Gemini.js
+  Claude-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_claude.js
+
+  Google-Search-Captcha-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_google_search_captcha.js
+  Netflix-Check:
+    url: https://fastly.jsdelivr.net/gh/StashNetworks/misc@main/collapsed-tiles/script/netflix.js
+
+  Reddit-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_reddit.js
+  Reddit-Guest-Check:
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/examples/stash/testtile_reddit_guest.js
+
+

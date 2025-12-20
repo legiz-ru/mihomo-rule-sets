@@ -36,7 +36,7 @@ payload:
   - PROCESS-NAME-REGEX,TslGame.* # Game
 
   # REPO
-  - PROCESS-NAME,REPO.exe
+  # - PROCESS-NAME,REPO.exe # GAME BANNED IN RU
 
   # Minecraft
   - PROCESS-NAME,javaw.exe # Minecraft (Java Edition)
@@ -170,3 +170,4 @@ payload:
   # FaceIT website
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
+

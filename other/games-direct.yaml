@@ -35,9 +35,6 @@ payload:
   - PROCESS-NAME,ExecPubg.exe # Launcher
   - PROCESS-NAME-REGEX,TslGame.* # Game
 
-  # REPO
-  # - PROCESS-NAME,REPO.exe # GAME BANNED IN RU
-
   # Minecraft
   - PROCESS-NAME,javaw.exe # Minecraft (Java Edition)
   - PROCESS-NAME,Minecraft.exe  # Minecraft (Bedrock Edition)
@@ -92,16 +89,28 @@ payload:
   - PROCESS-NAME,HuntGame.exe # Hunt: Showdown
   
   # Античиты (группировка)
-  - PROCESS-NAME,start_protected_game.exe # Apex Easy Anti-Cheat
+  - PROCESS-NAME,start_protected_game.exe # Apex Easy, THE FINALS  Anti-Cheat
   - PROCESS-NAME,BattleBitEAC.exe # BattleBit EAC
   - PROCESS-NAME,EasyAntiCheat.exe # Easy Anti-Cheat
   - PROCESS-NAME,TslGame_BE.exe # PUBG BattleEye
   - PROCESS-NAME,TslGame_ZK.exe # PUBG Anti-Cheat module
   - PROCESS-NAME-REGEX,(?i).*Vanguard.* # Valorant Vanguard Anti-Cheat
-  - PROCESS-NAME,start_protected_game.exe # The FINALS anticheat start exe
+  - PROCESS-NAME-REGEX,(?i).*vanguard.* # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,vgc.exe  # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,vgm.exe # Vanguard Anti-Cheat (Valorant, League of Legends)
+  - PROCESS-NAME,EasyAntiCheat.exe
+  - PROCESS-NAME,denuvo-anti-cheat-update-service.exe  # DENUVO Anticheat
+  - DOMAIN-SUFFIX,codefusion.technology  # DENUVO Anticheat
   - PROCESS-NAME,EscapeFromTarkovArena_BE.exe # Escape From Tarkov - Arena Battle Eye Anticheat
   - PROCESS-NAME,EscapeFromTarkov_BE.exe # Escape From Tarkov Battle Eye Anticheat
   - PROCESS-NAME,EasyAntiCheat_EOS.exe # Hunt: Showdown Easy Anti-Cheat
+  - PROCESS-NAME,faceitservice.exe # FaceIT AC
+  - PROCESS-NAME,faceitclient.exe  # FaceIT AC
+  - PROCESS-NAME,SGuard64.exe # Anti-Cheat Expert
+  - PROCESS-NAME,SGuardSvc64.exe # Anti-Cheat Expert
+  - PROCESS-NAME,SGuardUpdate64.exe # Anti-Cheat Expert
+  - PROCESS-NAME,ACE-Service64.exe # Anti-Cheat Expert
+
   # HELLDIVERS 2
   - PROCESS-NAME,helldivers2.exe
   - PROCESS-NAME,crs-handler.exe # Crash reports
@@ -148,32 +157,8 @@ payload:
   # Wuthering Waves
   - PROCESS-NAME,Wuthering Waves.exe
   - PROCESS-NAME,KRWebView.exe # In-game webview
-  - PROCESS-NAME,KRSDKExternal.exe
-
-  # Anti-Cheat Expert
-  - PROCESS-NAME,SGuard64.exe
-  - PROCESS-NAME,SGuardSvc64.exe
-  - PROCESS-NAME,SGuardUpdate64.exe
-  - PROCESS-NAME,ACE-Service64.exe
-  
-  # Easy Anti-Cheat
-  - PROCESS-NAME,start_protected_game.exe # Apex Legends, THE FINALS
-  - PROCESS-NAME,EasyAntiCheat.exe
-  # Vanguard Anti-Cheat (Valorant, League of Legends)
-  - PROCESS-NAME,vgc.exe
-  - PROCESS-NAME,vgm.exe
-  - PROCESS-NAME-REGEX,(?i).*vanguard.*
-  # DENUVO Anticheat
-  - PROCESS-NAME,denuvo-anti-cheat-update-service.exe
-  - DOMAIN-SUFFIX,codefusion.technology
-
-  # FaceIT AC
-  - PROCESS-NAME,faceitservice.exe
-  - PROCESS-NAME,faceitclient.exe  
+  - PROCESS-NAME,KRSDKExternal.exe    
 
   # FaceIT website
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
-
-
-

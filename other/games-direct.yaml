@@ -162,3 +162,6 @@ payload:
   # FaceIT website
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
+
+  # Warhammer 40000 Space Marine 2
+  - PROCESS-NAME,Warhammer 40000 Space Marine 2 - Retail.exe

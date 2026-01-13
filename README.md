@@ -402,7 +402,7 @@ DIRECT:classical:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oth
   
 ```yaml
 rule-providers:
-  ru-app-list:
+  games-direct:
     type: http
     behavior: classical
     format: yaml

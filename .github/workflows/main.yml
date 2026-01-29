@@ -105,6 +105,18 @@ jobs:
          jq -r '.rules[] | .rules[] | select(.process_name != null) | .process_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml && \
          jq -r '.rules[] | .rules[] | select(.package_name != null) | .package_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml
          mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs other/
+      - name: Generate whitelist rulesets
+        env:
+          NO_SKIP: true
+        run: |
+         mkdir -p whitelist
+         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
+         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
+         echo "payload:" > wli.yaml && cat ipwhitelist.txt | sed "s/.*/  - '&'/" >> wli.yaml
+         mihomo convert-ruleset ipcidr yaml wli.yaml wli.mrs
+         echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - '+.&'/" >> wld.yaml
+         mihomo convert-ruleset domain yaml wld.yaml wld.mrs
+         mv wli.yaml wli.mrs wld.yaml wld.mrs whitelist/
       - name: Generate v2ray templates for vpnbot
         env:
           NO_SKIP: true
@@ -127,6 +139,7 @@ jobs:
           rm itdoginfo-inside-russia.lst | rm antifilter-community.lst | rm no-russia-hosts.json | rm no-russia-hosts.lst
           rm oisd_big.txt | rm oisd_nsfw.txt | rm oisd_nsfw_small.txt | rm oisd_small.txt | rm discord-voice-ip-list.text
           rm torrent-websites.txt | rm torrent-trackers.txt | rm torrent-clients.json | rm mihomo-linux-amd64-v1.19.9.deb
+          rm ipwhitelist.txt | rm whitelist.txt
           
       - name: Get current date
         id: date

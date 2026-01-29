@@ -1,170 +1,356 @@
-name: Generate mihomo 
+name: Generate mihomo
 
 on:
   repository_dispatch:
     types: [trigger-from-sb-rule-sets]
   workflow_dispatch:
-  
+
 permissions:
   contents: write
 
 jobs:
-  generate_lists:
+  # Job 1: Generate ru-bundle rulesets
+  generate-ru-bundle:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
-      - name: Pull Changes
-        run: git pull
 
       - name: Install Dependencies
         run: |
           sudo apt update
           sudo apt install -y curl wget git jq
-         
-      - name: Download and install Mihomo
+
+      - name: Download and install Mihomo (latest)
         run: |
-          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb -o mihomo-linux-amd64-v1.19.9.deb
-          sudo apt install --fix-missing ./mihomo-linux-amd64-v1.19.9.deb
-        
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
+          sudo apt install --fix-missing ./mihomo-linux-amd64.deb
+
       - name: Generate ru-bundle
-        env:
-          NO_SKIP: true
         run: |
-         mkdir -p ru-bundle
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/legiz-ru/sb-rule-sets/raw/main/ru-bundle.lst -o ru-bundle.lst
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/itdoginfo/allow-domains/raw/main/Russia/inside-raw.lst -o itdoginfo-inside-russia.lst
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://community.antifilter.download/list/domains.lst -o antifilter-community.lst
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/legiz-ru/sb-rule-sets/raw/main/no-russia-hosts.json -o no-russia-hosts.json
-         jq -r '.rules[].domain_suffix[]' no-russia-hosts.json > no-russia-hosts.lst
-         echo "payload:" > rule.yaml && cat ru-bundle.lst | sed "s/.*/- '+.&'/" >> rule.yaml
-         mihomo convert-ruleset domain yaml rule.yaml rule.mrs
-         sed 's/^/+\./' ru-bundle.lst > rule.list
-         echo "payload:" > itdoginfo-inside-russia.yaml && cat itdoginfo-inside-russia.lst | sed "s/.*/- '+.&'/" >> itdoginfo-inside-russia.yaml
-         mihomo convert-ruleset domain yaml itdoginfo-inside-russia.yaml itdoginfo-inside-russia.mrs
-         echo "payload:" > antifilter-community.yaml && cat antifilter-community.lst | sed "s/.*/- '+.&'/" >> antifilter-community.yaml
-         mihomo convert-ruleset domain yaml antifilter-community.yaml antifilter-community.mrs
-         echo "payload:" > no-russia-hosts.yaml && cat no-russia-hosts.lst | sed "s/.*/- '+.&'/" >> no-russia-hosts.yaml
-         mihomo convert-ruleset domain yaml no-russia-hosts.yaml no-russia-hosts.mrs
-         mv rule.yaml rule.mrs rule.list itdoginfo-inside-russia.yaml itdoginfo-inside-russia.mrs antifilter-community.yaml antifilter-community.mrs no-russia-hosts.yaml no-russia-hosts.mrs ru-bundle/
+          mkdir -p ru-bundle
+          curl -L https://github.com/legiz-ru/sb-rule-sets/raw/main/ru-bundle.lst -o ru-bundle.lst
+          curl -L https://github.com/itdoginfo/allow-domains/raw/main/Russia/inside-raw.lst -o itdoginfo-inside-russia.lst
+          curl -L https://community.antifilter.download/list/domains.lst -o antifilter-community.lst
+          curl -L https://github.com/legiz-ru/sb-rule-sets/raw/main/no-russia-hosts.json -o no-russia-hosts.json
+          jq -r '.rules[].domain_suffix[]' no-russia-hosts.json > no-russia-hosts.lst
+
+          echo "payload:" > rule.yaml && cat ru-bundle.lst | sed "s/.*/- '+.&'/" >> rule.yaml
+          mihomo convert-ruleset domain yaml rule.yaml rule.mrs
+          sed 's/^/+\./' ru-bundle.lst > rule.list
+
+          echo "payload:" > itdoginfo-inside-russia.yaml && cat itdoginfo-inside-russia.lst | sed "s/.*/- '+.&'/" >> itdoginfo-inside-russia.yaml
+          mihomo convert-ruleset domain yaml itdoginfo-inside-russia.yaml itdoginfo-inside-russia.mrs
+
+          echo "payload:" > antifilter-community.yaml && cat antifilter-community.lst | sed "s/.*/- '+.&'/" >> antifilter-community.yaml
+          mihomo convert-ruleset domain yaml antifilter-community.yaml antifilter-community.mrs
+
+          echo "payload:" > no-russia-hosts.yaml && cat no-russia-hosts.lst | sed "s/.*/- '+.&'/" >> no-russia-hosts.yaml
+          mihomo convert-ruleset domain yaml no-russia-hosts.yaml no-russia-hosts.mrs
+
+          mv rule.yaml rule.mrs rule.list itdoginfo-inside-russia.yaml itdoginfo-inside-russia.mrs antifilter-community.yaml antifilter-community.mrs no-russia-hosts.yaml no-russia-hosts.mrs ru-bundle/
+
+      - name: Upload ru-bundle artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ru-bundle
+          path: ru-bundle/
+
+  # Job 2: Generate re-filter rulesets
+  generate-re-filter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl wget git jq
+
+      - name: Download and install Mihomo (latest)
+        run: |
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
+          sudo apt install --fix-missing ./mihomo-linux-amd64.deb
+
       - name: Generate re-filter
-        env:
-          NO_SKIP: true
         run: |
-         mkdir -p re-filter
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/1andrevich/Re-filter-lists/raw/main/ipsum.lst -o re-filter-ip.text
-         mihomo convert-ruleset ipcidr text re-filter-ip.text ip-rule.mrs
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/1andrevich/Re-filter-lists/raw/main/domains_all.lst -o re-filter-domain.text
-         echo "payload:" > domain-rule.yaml && cat re-filter-domain.text | sed "s/.*/- '+.&'/" >> domain-rule.yaml
-         mihomo convert-ruleset domain yaml domain-rule.yaml domain-rule.mrs
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/Akiyamov/singbox-ech-list/releases/latest/download/domains_noech.lst -o re-filter-noech.lst
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/Akiyamov/singbox-ech-list/releases/latest/download/domains_ech.lst -o re-filter-ech.lst
-         echo "payload:" > re-filter-noech.yaml && cat re-filter-noech.lst | sed "s/.*/- '+.&'/" >> re-filter-noech.yaml
-         mihomo convert-ruleset domain yaml re-filter-noech.yaml re-filter-noech.mrs
-         echo "payload:" > re-filter-ech.yaml && cat re-filter-ech.lst | sed "s/.*/- '+.&'/" >> re-filter-ech.yaml
-         mihomo convert-ruleset domain yaml re-filter-ech.yaml re-filter-ech.mrs
-         mv domain-rule.yaml domain-rule.mrs ip-rule.mrs re-filter-ech.yaml re-filter-ech.mrs re-filter-noech.yaml re-filter-noech.mrs re-filter/
+          mkdir -p re-filter
+          curl -L https://github.com/1andrevich/Re-filter-lists/raw/main/ipsum.lst -o re-filter-ip.text
+          mihomo convert-ruleset ipcidr text re-filter-ip.text ip-rule.mrs
+
+          curl -L https://github.com/1andrevich/Re-filter-lists/raw/main/domains_all.lst -o re-filter-domain.text
+          echo "payload:" > domain-rule.yaml && cat re-filter-domain.text | sed "s/.*/- '+.&'/" >> domain-rule.yaml
+          mihomo convert-ruleset domain yaml domain-rule.yaml domain-rule.mrs
+
+          curl -L https://github.com/Akiyamov/singbox-ech-list/releases/latest/download/domains_noech.lst -o re-filter-noech.lst
+          curl -L https://github.com/Akiyamov/singbox-ech-list/releases/latest/download/domains_ech.lst -o re-filter-ech.lst
+
+          echo "payload:" > re-filter-noech.yaml && cat re-filter-noech.lst | sed "s/.*/- '+.&'/" >> re-filter-noech.yaml
+          mihomo convert-ruleset domain yaml re-filter-noech.yaml re-filter-noech.mrs
+
+          echo "payload:" > re-filter-ech.yaml && cat re-filter-ech.lst | sed "s/.*/- '+.&'/" >> re-filter-ech.yaml
+          mihomo convert-ruleset domain yaml re-filter-ech.yaml re-filter-ech.mrs
+
+          mv domain-rule.yaml domain-rule.mrs ip-rule.mrs re-filter-ech.yaml re-filter-ech.mrs re-filter-noech.yaml re-filter-noech.mrs re-filter/
+
+      - name: Upload re-filter artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: re-filter
+          path: re-filter/
+
+  # Job 3: Generate oisd rulesets
+  generate-oisd:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl wget git jq
+
+      - name: Download and install Mihomo (latest)
+        run: |
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
+          sudo apt install --fix-missing ./mihomo-linux-amd64.deb
+
       - name: Generate oisd
-        env:
-          NO_SKIP: true
         run: |
-         mkdir -p oisd
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_big.txt -o oisd_big.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_nsfw.txt -o oisd_nsfw.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_nsfw_small.txt -o oisd_nsfw_small.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_small.txt -o oisd_small.txt
-         grep -v '^\s*$' oisd_big.txt | grep -v '^#' > tmp && mv tmp oisd_big.txt
-         grep -v '^\s*$' oisd_nsfw.txt | grep -v '^#' > tmp && mv tmp oisd_nsfw.txt
-         grep -v '^\s*$' oisd_nsfw_small.txt | grep -v '^#' > tmp && mv tmp oisd_nsfw_small.txt
-         grep -v '^\s*$' oisd_small.txt | grep -v '^#' > tmp && mv tmp oisd_small.txt
-         echo "payload:" > big.yaml && cat oisd_big.txt | sed "s/.*/- '+.&'/" >> big.yaml
-         echo "payload:" > nsfw.yaml && cat oisd_nsfw.txt | sed "s/.*/- '+.&'/" >> nsfw.yaml
-         echo "payload:" > nsfw_small.yaml && cat oisd_nsfw_small.txt | sed "s/.*/- '+.&'/" >> nsfw_small.yaml
-         echo "payload:" > small.yaml && cat oisd_small.txt | sed "s/.*/- '+.&'/" >> small.yaml
-         mihomo convert-ruleset domain yaml big.yaml big.mrs
-         mihomo convert-ruleset domain yaml nsfw.yaml nsfw.mrs
-         mihomo convert-ruleset domain yaml nsfw_small.yaml nsfw_small.mrs
-         mihomo convert-ruleset domain yaml small.yaml small.mrs
-         mv big.yaml big.mrs nsfw.yaml nsfw.mrs nsfw_small.yaml nsfw_small.mrs small.yaml small.mrs oisd/
+          mkdir -p oisd
+          curl -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_big.txt -o oisd_big.txt
+          curl -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_nsfw.txt -o oisd_nsfw.txt
+          curl -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_nsfw_small.txt -o oisd_nsfw_small.txt
+          curl -L https://github.com/sjhgvr/oisd/raw/main/domainswild2_small.txt -o oisd_small.txt
+
+          grep -v '^\s*$' oisd_big.txt | grep -v '^#' > tmp && mv tmp oisd_big.txt
+          grep -v '^\s*$' oisd_nsfw.txt | grep -v '^#' > tmp && mv tmp oisd_nsfw.txt
+          grep -v '^\s*$' oisd_nsfw_small.txt | grep -v '^#' > tmp && mv tmp oisd_nsfw_small.txt
+          grep -v '^\s*$' oisd_small.txt | grep -v '^#' > tmp && mv tmp oisd_small.txt
+
+          echo "payload:" > big.yaml && cat oisd_big.txt | sed "s/.*/- '+.&'/" >> big.yaml
+          echo "payload:" > nsfw.yaml && cat oisd_nsfw.txt | sed "s/.*/- '+.&'/" >> nsfw.yaml
+          echo "payload:" > nsfw_small.yaml && cat oisd_nsfw_small.txt | sed "s/.*/- '+.&'/" >> nsfw_small.yaml
+          echo "payload:" > small.yaml && cat oisd_small.txt | sed "s/.*/- '+.&'/" >> small.yaml
+
+          mihomo convert-ruleset domain yaml big.yaml big.mrs
+          mihomo convert-ruleset domain yaml nsfw.yaml nsfw.mrs
+          mihomo convert-ruleset domain yaml nsfw_small.yaml nsfw_small.mrs
+          mihomo convert-ruleset domain yaml small.yaml small.mrs
+
+          mv big.yaml big.mrs nsfw.yaml nsfw.mrs nsfw_small.yaml nsfw_small.mrs small.yaml small.mrs oisd/
+
+      - name: Upload oisd artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: oisd
+          path: oisd/
+
+  # Job 4: Generate other rulesets (torrents, discord, apps)
+  generate-other:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl wget git jq
+
+      - name: Download and install Mihomo (latest)
+        run: |
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
+          sudo apt install --fix-missing ./mihomo-linux-amd64.deb
+
       - name: Generate other rulesets
-        env:
-          NO_SKIP: true
         run: |
-         mkdir -p other
-         curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-app-list.json | jq -r '.rules[].rules[].package_name[]' | sed 's/^/ - PROCESS-NAME,/' | sed '1i payload:' > other/ru-app-list.yaml
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/GhostRooter0953/discord-voice-ips/raw/master/voice_domains/discord-voice-ip-list -o discord-voice-ip-list.text
-         sed -i 's/$/\/32/' discord-voice-ip-list.text
-         mihomo convert-ruleset ipcidr text discord-voice-ip-list.text discord-voice-ip-list.mrs
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-websites.txt -o torrent-websites.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-trackers.txt -o torrent-trackers.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/legiz-ru/sb-rule-sets/raw/main/torrent-clients.json -o torrent-clients.json
-         mihomo convert-ruleset domain text torrent-websites.txt torrent-websites.mrs
-         mihomo convert-ruleset domain text torrent-trackers.txt torrent-trackers.mrs
-         echo "payload:" > torrent-clients.yaml && \
-         jq -r '.rules[] | .rules[] | select(.process_name != null) | .process_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml && \
-         jq -r '.rules[] | .rules[] | select(.package_name != null) | .package_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml
-         mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs other/
+          mkdir -p other
+
+          # Generate ru-app-list
+          curl -s https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-app-list.json | jq -r '.rules[].rules[].package_name[]' | sed 's/^/ - PROCESS-NAME,/' | sed '1i payload:' > other/ru-app-list.yaml
+
+          # Generate Discord voice IP list
+          curl -L https://github.com/GhostRooter0953/discord-voice-ips/raw/master/voice_domains/discord-voice-ip-list -o discord-voice-ip-list.text
+          sed -i 's/$/\/32/' discord-voice-ip-list.text
+          mihomo convert-ruleset ipcidr text discord-voice-ip-list.text discord-voice-ip-list.mrs
+
+          # Generate torrent blocklists
+          curl -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-websites.txt -o torrent-websites.txt
+          curl -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-trackers.txt -o torrent-trackers.txt
+          curl -L https://github.com/legiz-ru/sb-rule-sets/raw/main/torrent-clients.json -o torrent-clients.json
+
+          mihomo convert-ruleset domain text torrent-websites.txt torrent-websites.mrs
+          mihomo convert-ruleset domain text torrent-trackers.txt torrent-trackers.mrs
+
+          echo "payload:" > torrent-clients.yaml && \
+          jq -r '.rules[] | .rules[] | select(.process_name != null) | .process_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml && \
+          jq -r '.rules[] | .rules[] | select(.package_name != null) | .package_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml
+
+          mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs other/
+
+      - name: Upload other artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: other-partial
+          path: other/
+
+  # Job 5: Generate whitelist rulesets
+  generate-whitelist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl wget git jq python3
+
+      - name: Download and install Mihomo (latest)
+        run: |
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
+          sudo apt install --fix-missing ./mihomo-linux-amd64.deb
+
       - name: Generate whitelist rulesets
-        env:
-          NO_SKIP: true
         run: |
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
-         cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.text
-         python3 << 'EOF' > wlimrs-optimized.text
-         import ipaddress
-         import sys
+          curl -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
+          curl -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
 
-         # Read CIDR blocks from file
-         with open('wlimrs.text', 'r') as f:
-             cidrs = [line.strip() for line in f if line.strip()]
+          cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.text
 
-         # Convert to network objects
-         networks = [ipaddress.ip_network(cidr, strict=False) for cidr in cidrs]
+          # Optimize CIDR blocks using Python
+          python3 << 'EOF' > wlimrs-optimized.text
+          import ipaddress
+          import sys
 
-         # Collapse adjacent networks
-         collapsed = ipaddress.collapse_addresses(networks)
+          # Read CIDR blocks from file
+          with open('wlimrs.text', 'r') as f:
+              cidrs = [line.strip() for line in f if line.strip()]
 
-         # Output optimized list
-         for network in sorted(collapsed):
-             print(network)
-         EOF
-         mv wlimrs-optimized.text wlimrs.text
-         echo "payload:" > wli.yaml && cat wlimrs.text | sed "s/.*/  - IP-CIDR,&/" >> wli.yaml
-         mihomo convert-ruleset ipcidr text wlimrs.text wli.mrs
-         echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
-         mihomo convert-ruleset domain text whitelist.txt wld.mrs
-         mv wli.yaml wli.mrs wld.yaml wld.mrs other/
+          # Convert to network objects
+          networks = [ipaddress.ip_network(cidr, strict=False) for cidr in cidrs]
+
+          # Collapse adjacent networks
+          collapsed = ipaddress.collapse_addresses(networks)
+
+          # Output optimized list
+          for network in sorted(collapsed):
+              print(network)
+          EOF
+
+          mv wlimrs-optimized.text wlimrs.text
+
+          echo "payload:" > wli.yaml && cat wlimrs.text | sed "s/.*/  - IP-CIDR,&/" >> wli.yaml
+          mihomo convert-ruleset ipcidr text wlimrs.text wli.mrs
+
+          echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
+          mihomo convert-ruleset domain text whitelist.txt wld.mrs
+
+          mkdir -p other
+          mv wli.yaml wli.mrs wld.yaml wld.mrs other/
+
+      - name: Upload whitelist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: whitelist-partial
+          path: other/
+
+  # Job 6: Generate v2ray templates
+  generate-v2ray-templates:
+    runs-on: ubuntu-latest
+    needs: [generate-ru-bundle]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y curl jq
+
+      - name: Download ru-bundle artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ru-bundle
+          path: ru-bundle/
+
+      - name: Extract ru-bundle.lst from artifact
+        run: |
+          # The original ru-bundle.lst was not saved in artifact, so we need to download it again
+          curl -L https://github.com/legiz-ru/sb-rule-sets/raw/main/ru-bundle.lst -o ru-bundle.lst
+
       - name: Generate v2ray templates for vpnbot
-        env:
-          NO_SKIP: true
         run: |
-         mkdir -p other
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/mercurykd/vpnbot/raw/dev/config/v2ray.json -o other/vpnbot-v2ray-ru-bundle.json
-         domains=$(cat ru-bundle.lst | jq -R . | jq -s .) && jq --argjson domains "$domains" '(.routing.rules | to_entries | .[] | select(.value.outboundTag == "block").key + 1) as $idx | .routing.rules = .routing.rules[0:$idx] + [{"type": "field", "outboundTag": "~outbound~", "domain": $domains}] + .routing.rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > temp.json && mv temp.json other/vpnbot-v2ray-ru-bundle.json
-         jq '.routing.rules as $rules | ($rules | to_entries | map(select(.value.outboundTag == "block" and .value.domain == "~block~")) | .[0].key + 1) as $idx | .routing.rules = $rules[0:$idx] + [{"type": "field", "outboundTag": "block", "domain": ["geosite:category-ads-all"]}] + $rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > other/vpnbot-v2ray-ru-bundle-category-ads-all.json
+          mkdir -p other
+          curl -L https://github.com/mercurykd/vpnbot/raw/dev/config/v2ray.json -o other/vpnbot-v2ray-ru-bundle.json
+          domains=$(cat ru-bundle.lst | jq -R . | jq -s .) && jq --argjson domains "$domains" '(.routing.rules | to_entries | .[] | select(.value.outboundTag == "block").key + 1) as $idx | .routing.rules = .routing.rules[0:$idx] + [{"type": "field", "outboundTag": "~outbound~", "domain": $domains}] + .routing.rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > temp.json && mv temp.json other/vpnbot-v2ray-ru-bundle.json
+          jq '.routing.rules as $rules | ($rules | to_entries | map(select(.value.outboundTag == "block" and .value.domain == "~block~")) | .[0].key + 1) as $idx | .routing.rules = $rules[0:$idx] + [{"type": "field", "outboundTag": "block", "domain": ["geosite:category-ads-all"]}] + $rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > other/vpnbot-v2ray-ru-bundle-category-ads-all.json
+
       - name: Generate v2ray templates for marzban
-        env:
-          NO_SKIP: true
         run: |
-         cp .github/workflows/v2ray-marzban-base.json other/marzban-v2ray-ru-bundle-category-ads-all.json
-         domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle-category-ads-all.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle-category-ads-all.json
-         cp .github/workflows/v2ray-marzban-base-ios.json other/marzban-v2ray-ru-bundle.json
-         domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle.json
-      - name: Delete temp file
+          cp .github/workflows/v2ray-marzban-base.json other/marzban-v2ray-ru-bundle-category-ads-all.json
+          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle-category-ads-all.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle-category-ads-all.json
+
+          cp .github/workflows/v2ray-marzban-base-ios.json other/marzban-v2ray-ru-bundle.json
+          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle.json
+
+      - name: Upload v2ray templates artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2ray-templates
+          path: other/
+
+  # Final job: Collect all artifacts and commit
+  finalize:
+    runs-on: ubuntu-latest
+    needs: [generate-ru-bundle, generate-re-filter, generate-oisd, generate-other, generate-whitelist, generate-v2ray-templates]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Organize artifacts
         run: |
-          rm ru-bundle.lst | rm re-filter-ip.text | rm re-filter-domain.text |  rm re-filter-ech.lst | rm re-filter-noech.lst
-          rm itdoginfo-inside-russia.lst | rm antifilter-community.lst | rm no-russia-hosts.json | rm no-russia-hosts.lst
-          rm oisd_big.txt | rm oisd_nsfw.txt | rm oisd_nsfw_small.txt | rm oisd_small.txt | rm discord-voice-ip-list.text
-          rm torrent-websites.txt | rm torrent-trackers.txt | rm torrent-clients.json | rm mihomo-linux-amd64-v1.19.9.deb
-          rm ipwhitelist.txt | rm whitelist.txt | rm wlimrs.text
-          
+          # Move artifacts to correct locations
+          # ru-bundle is already in ru-bundle/
+          # re-filter is already in re-filter/
+          # oisd is already in oisd/
+          # other-partial needs to be merged into other/
+          # whitelist-partial needs to be merged into other/
+          # v2ray-templates needs to be merged into other/
+
+          mkdir -p other
+
+          if [ -d "other-partial" ]; then
+            mv other-partial/* other/ 2>/dev/null || true
+            rm -rf other-partial
+          fi
+
+          if [ -d "whitelist-partial" ]; then
+            mv whitelist-partial/* other/ 2>/dev/null || true
+            rm -rf whitelist-partial
+          fi
+
+          if [ -d "v2ray-templates" ]; then
+            mv v2ray-templates/* other/ 2>/dev/null || true
+            rm -rf v2ray-templates
+          fi
+
       - name: Get current date
         id: date
         run: |
           echo "DATE=$(TZ=Europe/Moscow date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-      
+
       - name: Commit and Push Changes
         run: |
           git config --local user.email "legiz-ru@users.noreply.github.com"

@@ -25,8 +25,8 @@ jobs:
         run: |
           LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
           if [ -z "$LATEST_URL" ]; then
-            echo "Failed to get latest release URL, using fallback version v1.19.9"
-            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+            echo "Failed to get latest release URL, using fallback version v1.19.19"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.19/mihomo-linux-amd64-v1.19.19.deb"
           fi
           echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
@@ -56,11 +56,32 @@ jobs:
 
           mv rule.yaml rule.mrs rule.list itdoginfo-inside-russia.yaml itdoginfo-inside-russia.mrs antifilter-community.yaml antifilter-community.mrs no-russia-hosts.yaml no-russia-hosts.mrs ru-bundle/
 
+      - name: Generate v2ray templates for vpnbot
+        run: |
+          mkdir -p other
+          curl -L https://github.com/mercurykd/vpnbot/raw/dev/config/v2ray.json -o other/vpnbot-v2ray-ru-bundle.json
+          domains=$(cat ru-bundle.lst | jq -R . | jq -s .) && jq --argjson domains "$domains" '(.routing.rules | to_entries | .[] | select(.value.outboundTag == "block").key + 1) as $idx | .routing.rules = .routing.rules[0:$idx] + [{"type": "field", "outboundTag": "~outbound~", "domain": $domains}] + .routing.rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > temp.json && mv temp.json other/vpnbot-v2ray-ru-bundle.json
+          jq '.routing.rules as $rules | ($rules | to_entries | map(select(.value.outboundTag == "block" and .value.domain == "~block~")) | .[0].key + 1) as $idx | .routing.rules = $rules[0:$idx] + [{"type": "field", "outboundTag": "block", "domain": ["geosite:category-ads-all"]}] + $rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > other/vpnbot-v2ray-ru-bundle-category-ads-all.json
+
+      - name: Generate v2ray templates for marzban
+        run: |
+          cp .github/workflows/v2ray-marzban-base.json other/marzban-v2ray-ru-bundle-category-ads-all.json
+          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle-category-ads-all.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle-category-ads-all.json
+
+          cp .github/workflows/v2ray-marzban-base-ios.json other/marzban-v2ray-ru-bundle.json
+          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle.json
+
       - name: Upload ru-bundle artifacts
         uses: actions/upload-artifact@v4
         with:
           name: ru-bundle
           path: ru-bundle/
+
+      - name: Upload v2ray templates artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: v2ray-templates
+          path: other/
 
   # Job 2: Generate re-filter rulesets
   generate-re-filter:
@@ -78,8 +99,8 @@ jobs:
         run: |
           LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
           if [ -z "$LATEST_URL" ]; then
-            echo "Failed to get latest release URL, using fallback version v1.19.9"
-            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+            echo "Failed to get latest release URL, using fallback version v1.19.19"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.19/mihomo-linux-amd64-v1.19.19.deb"
           fi
           echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
@@ -128,8 +149,8 @@ jobs:
         run: |
           LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
           if [ -z "$LATEST_URL" ]; then
-            echo "Failed to get latest release URL, using fallback version v1.19.9"
-            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+            echo "Failed to get latest release URL, using fallback version v1.19.19"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.19/mihomo-linux-amd64-v1.19.19.deb"
           fi
           echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
@@ -182,8 +203,8 @@ jobs:
         run: |
           LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
           if [ -z "$LATEST_URL" ]; then
-            echo "Failed to get latest release URL, using fallback version v1.19.9"
-            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+            echo "Failed to get latest release URL, using fallback version v1.19.19"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.19/mihomo-linux-amd64-v1.19.19.deb"
           fi
           echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
@@ -222,7 +243,7 @@ jobs:
           path: other/
 
   # Job 5: Generate whitelist rulesets
-  generate-whitelist:
+  generate-wl:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -237,8 +258,8 @@ jobs:
         run: |
           LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
           if [ -z "$LATEST_URL" ]; then
-            echo "Failed to get latest release URL, using fallback version v1.19.9"
-            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+            echo "Failed to get latest release URL, using fallback version v1.19.19"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.19/mihomo-linux-amd64-v1.19.19.deb"
           fi
           echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
@@ -288,55 +309,10 @@ jobs:
           name: whitelist-partial
           path: other/
 
-  # Job 6: Generate v2ray templates
-  generate-v2ray-templates:
-    runs-on: ubuntu-latest
-    needs: [generate-ru-bundle]
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Install Dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y curl jq
-
-      - name: Download ru-bundle artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ru-bundle
-          path: ru-bundle/
-
-      - name: Extract ru-bundle.lst from artifact
-        run: |
-          # The original ru-bundle.lst was not saved in artifact, so we need to download it again
-          curl -L https://github.com/legiz-ru/sb-rule-sets/raw/main/ru-bundle.lst -o ru-bundle.lst
-
-      - name: Generate v2ray templates for vpnbot
-        run: |
-          mkdir -p other
-          curl -L https://github.com/mercurykd/vpnbot/raw/dev/config/v2ray.json -o other/vpnbot-v2ray-ru-bundle.json
-          domains=$(cat ru-bundle.lst | jq -R . | jq -s .) && jq --argjson domains "$domains" '(.routing.rules | to_entries | .[] | select(.value.outboundTag == "block").key + 1) as $idx | .routing.rules = .routing.rules[0:$idx] + [{"type": "field", "outboundTag": "~outbound~", "domain": $domains}] + .routing.rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > temp.json && mv temp.json other/vpnbot-v2ray-ru-bundle.json
-          jq '.routing.rules as $rules | ($rules | to_entries | map(select(.value.outboundTag == "block" and .value.domain == "~block~")) | .[0].key + 1) as $idx | .routing.rules = $rules[0:$idx] + [{"type": "field", "outboundTag": "block", "domain": ["geosite:category-ads-all"]}] + $rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > other/vpnbot-v2ray-ru-bundle-category-ads-all.json
-
-      - name: Generate v2ray templates for marzban
-        run: |
-          cp .github/workflows/v2ray-marzban-base.json other/marzban-v2ray-ru-bundle-category-ads-all.json
-          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle-category-ads-all.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle-category-ads-all.json
-
-          cp .github/workflows/v2ray-marzban-base-ios.json other/marzban-v2ray-ru-bundle.json
-          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle.json
-
-      - name: Upload v2ray templates artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: v2ray-templates
-          path: other/
-
   # Final job: Collect all artifacts and commit
   finalize:
     runs-on: ubuntu-latest
-    needs: [generate-ru-bundle, generate-re-filter, generate-oisd, generate-other, generate-whitelist, generate-v2ray-templates]
+    needs: [generate-ru-bundle, generate-re-filter, generate-oisd, generate-other, generate-wl]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4

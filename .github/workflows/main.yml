@@ -111,10 +111,10 @@ jobs:
         run: |
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
-         echo "payload:" > wli.yaml && cat ipwhitelist.txt | sed "s/.*/  IP-CIDR,&\/32/" >> wli.yaml
+         echo "payload:" > wli.yaml && cat ipwhitelist.txt | sed "s/.*/  - IP-CIDR,&\/32/" >> wli.yaml
          cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.yaml
          mihomo convert-ruleset ipcidr text wlimrs.yaml wli.mrs
-         echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  DOMAIN,&/" >> wld.yaml
+         echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
          cp whitelist.txt wldmrs.yaml
          mihomo convert-ruleset domain text wldmrs.yaml wld.mrs
          mv wli.yaml wli.mrs wld.yaml wld.mrs other/

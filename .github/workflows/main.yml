@@ -111,10 +111,12 @@ jobs:
         run: |
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
-         echo "payload:" > wli.yaml && cat ipwhitelist.txt | sed "s/.*/  - '&'/" >> wli.yaml
-         mihomo convert-ruleset ipcidr yaml wli.yaml wli.mrs
-         echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - '+.&'/" >> wld.yaml
-         mihomo convert-ruleset domain yaml wld.yaml wld.mrs
+         echo "payload:" > wli.yaml && cat ipwhitelist.txt | sed "s/.*/  - IP-CIDR,&\/32/" >> wli.yaml
+         cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.yaml
+         mihomo convert-ruleset ipcidr text wlimrs.yaml wli.mrs
+         echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
+         cp whitelist.txt wldmrs.yaml
+         mihomo convert-ruleset domain text wldmrs.yaml wld.mrs
          mv wli.yaml wli.mrs wld.yaml wld.mrs other/
       - name: Generate v2ray templates for vpnbot
         env:
@@ -138,7 +140,7 @@ jobs:
           rm itdoginfo-inside-russia.lst | rm antifilter-community.lst | rm no-russia-hosts.json | rm no-russia-hosts.lst
           rm oisd_big.txt | rm oisd_nsfw.txt | rm oisd_nsfw_small.txt | rm oisd_small.txt | rm discord-voice-ip-list.text
           rm torrent-websites.txt | rm torrent-trackers.txt | rm torrent-clients.json | rm mihomo-linux-amd64-v1.19.9.deb
-          rm ipwhitelist.txt | rm whitelist.txt
+          rm ipwhitelist.txt | rm whitelist.txt | rm wlimrs.yaml | rm wldmrs.yaml
           
       - name: Get current date
         id: date

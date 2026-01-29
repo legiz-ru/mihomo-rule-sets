@@ -115,8 +115,7 @@ jobs:
          cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.text
          mihomo convert-ruleset ipcidr text wlimrs.text wli.mrs
          echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
-         cp whitelist.txt wldmrs.text
-         mihomo convert-ruleset domain text wldmrs.text wld.mrs
+         mihomo convert-ruleset domain text whitelist.txt wld.mrs
          mv wli.yaml wli.mrs wld.yaml wld.mrs other/
       - name: Generate v2ray templates for vpnbot
         env:
@@ -140,7 +139,7 @@ jobs:
           rm itdoginfo-inside-russia.lst | rm antifilter-community.lst | rm no-russia-hosts.json | rm no-russia-hosts.lst
           rm oisd_big.txt | rm oisd_nsfw.txt | rm oisd_nsfw_small.txt | rm oisd_small.txt | rm discord-voice-ip-list.text
           rm torrent-websites.txt | rm torrent-trackers.txt | rm torrent-clients.json | rm mihomo-linux-amd64-v1.19.9.deb
-          rm ipwhitelist.txt | rm whitelist.txt | rm wlimrs.text | rm wldmrs.text
+          rm ipwhitelist.txt | rm whitelist.txt | rm wlimrs.text
           
       - name: Get current date
         id: date

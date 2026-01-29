@@ -111,8 +111,27 @@ jobs:
         run: |
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
-         echo "payload:" > wli.yaml && cat ipwhitelist.txt | sed "s/.*/  - IP-CIDR,&\/32/" >> wli.yaml
          cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.text
+         python3 << 'EOF' > wlimrs-optimized.text
+         import ipaddress
+         import sys
+
+         # Read CIDR blocks from file
+         with open('wlimrs.text', 'r') as f:
+             cidrs = [line.strip() for line in f if line.strip()]
+
+         # Convert to network objects
+         networks = [ipaddress.ip_network(cidr, strict=False) for cidr in cidrs]
+
+         # Collapse adjacent networks
+         collapsed = ipaddress.collapse_addresses(networks)
+
+         # Output optimized list
+         for network in sorted(collapsed):
+             print(network)
+         EOF
+         mv wlimrs-optimized.text wlimrs.text
+         echo "payload:" > wli.yaml && cat wlimrs.text | sed "s/.*/  - IP-CIDR,&/" >> wli.yaml
          mihomo convert-ruleset ipcidr text wlimrs.text wli.mrs
          echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
          mihomo convert-ruleset domain text whitelist.txt wld.mrs

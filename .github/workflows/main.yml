@@ -23,7 +23,12 @@ jobs:
 
       - name: Download and install Mihomo (latest)
         run: |
-          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
+          if [ -z "$LATEST_URL" ]; then
+            echo "Failed to get latest release URL, using fallback version v1.19.9"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+          fi
+          echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64.deb
 
@@ -71,7 +76,12 @@ jobs:
 
       - name: Download and install Mihomo (latest)
         run: |
-          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
+          if [ -z "$LATEST_URL" ]; then
+            echo "Failed to get latest release URL, using fallback version v1.19.9"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+          fi
+          echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64.deb
 
@@ -116,7 +126,12 @@ jobs:
 
       - name: Download and install Mihomo (latest)
         run: |
-          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
+          if [ -z "$LATEST_URL" ]; then
+            echo "Failed to get latest release URL, using fallback version v1.19.9"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+          fi
+          echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64.deb
 
@@ -165,7 +180,12 @@ jobs:
 
       - name: Download and install Mihomo (latest)
         run: |
-          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
+          if [ -z "$LATEST_URL" ]; then
+            echo "Failed to get latest release URL, using fallback version v1.19.9"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+          fi
+          echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64.deb
 
@@ -215,7 +235,12 @@ jobs:
 
       - name: Download and install Mihomo (latest)
         run: |
-          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and endswith(".deb")) | .browser_download_url')
+          LATEST_URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.assets[] | select(.name | contains("linux-amd64") and contains("-v1-") and endswith(".deb")) | .browser_download_url' | head -1)
+          if [ -z "$LATEST_URL" ]; then
+            echo "Failed to get latest release URL, using fallback version v1.19.9"
+            LATEST_URL="https://github.com/MetaCubeX/mihomo/releases/download/v1.19.9/mihomo-linux-amd64-v1.19.9.deb"
+          fi
+          echo "Downloading from: $LATEST_URL"
           curl -L "$LATEST_URL" -o mihomo-linux-amd64.deb
           sudo apt install --fix-missing ./mihomo-linux-amd64.deb
 

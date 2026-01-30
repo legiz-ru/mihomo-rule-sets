@@ -270,6 +270,46 @@ jobs:
           curl -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/ipwhitelist.txt -o ipwhitelist.txt
           curl -L https://raw.githubusercontent.com/hxehex/russia-mobile-internet-whitelist/main/whitelist.txt -o whitelist.txt
 
+          # Optimize domain list using Python
+          python3 << 'EOF' > whitelist-optimized.txt
+          from collections import defaultdict
+          import sys
+
+          # Read domains from file
+          with open('whitelist.txt', 'r') as f:
+              domains = [line.strip() for line in f if line.strip()]
+
+          # Extract parent domain (last 2 parts for most TLDs)
+          def get_parent_domain(domain):
+              parts = domain.split('.')
+              if len(parts) <= 2:
+                  return domain
+              # Return last 2 parts as parent domain (e.g., mail.ru, kinopoisk.ru)
+              return '.'.join(parts[-2:])
+
+          # Group domains by their parent
+          parent_map = defaultdict(list)
+          for domain in domains:
+              parent = get_parent_domain(domain)
+              parent_map[parent].append(domain)
+
+          # Build optimized list
+          optimized = set()
+          for parent, subdomains in parent_map.items():
+              # If there are 3 or more subdomains, use parent domain instead
+              if len(subdomains) >= 3:
+                  optimized.add(parent)
+              else:
+                  # Otherwise keep all subdomains
+                  optimized.update(subdomains)
+
+          # Sort and output
+          for domain in sorted(optimized):
+              print(domain)
+          EOF
+
+          mv whitelist-optimized.txt whitelist.txt
+
           cat ipwhitelist.txt | sed 's/$/\/32/' > wlimrs.text
 
           # Optimize CIDR blocks using Python

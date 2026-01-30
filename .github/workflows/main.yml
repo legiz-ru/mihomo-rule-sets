@@ -337,8 +337,9 @@ jobs:
           echo "payload:" > wli.yaml && cat wlimrs.text | sed "s/.*/  - IP-CIDR,&/" >> wli.yaml
           mihomo convert-ruleset ipcidr text wlimrs.text wli.mrs
 
-          echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN,&/" >> wld.yaml
-          mihomo convert-ruleset domain text whitelist.txt wld.mrs
+          echo "payload:" > wld.yaml && cat whitelist.txt | sed "s/.*/  - DOMAIN-SUFFIX,&/" >> wld.yaml
+          sed 's/^/+./' whitelist.txt > whitelist-with-prefix.txt
+          mihomo convert-ruleset domain text whitelist-with-prefix.txt wld.mrs
 
           mkdir -p other
           mv wli.yaml wli.mrs wld.yaml wld.mrs other/

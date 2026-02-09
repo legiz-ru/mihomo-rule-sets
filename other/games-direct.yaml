@@ -162,3 +162,9 @@ payload:
   # FaceIT website
   - DOMAIN-SUFFIX,faceit.com
   - DOMAIN-SUFFIX,faceit-cdn.net
+
+  # CyberShoke
+  - DOMAIN-SUFFIX,cybershoke.net
+
+  # MIMESIS
+  - PROCESS-NAME,MIMESIS.exe

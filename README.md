@@ -1,7 +1,7 @@
 # mihomo (clash-meta) rulesets
 
-## ru-bundle
-include: [itdoginfo-inside-russia](https://github.com/itdoginfo/allow-domains/) + [no-russia-hosts](https://github.com/dartraiden/no-russia-hosts) + [antifilter-community](https://community.antifilter.download/)
+## ru-bundle (with rk)
+include: [itdoginfo-inside-russia](https://github.com/itdoginfo/allow-domains/) + [no-russia-hosts](https://github.com/dartraiden/no-russia-hosts) + [antifilter-community](https://community.antifilter.download/) + [rknasnblock](https://pastes.io/72-as?syntax=markdown)
 <details>
   <summary>how to add ↓ </summary>
   
@@ -27,8 +27,16 @@ rule-providers:
     url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rule.mrs
     path: ./ru-bundle/rule.mrs
     interval: 86400
+  rknasnblock:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rknasnblock.mrs
+    path: ./ru-bundle/rknasnblock.mrs
+    interval: 86400
 rules:
   - RULE-SET,ru-bundle,PROXY
+  - RULE-SET,rknasnblock,PROXY
   - MATCH,DIRECT
 ```
 
@@ -38,6 +46,10 @@ rules:
   
 ```shell
 proxy:domain:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rule.mrs
+```
+
+```shell
+proxy:ipcidr:86400:hhttps://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rknasnblock.mrs
 ```
 
 </details>

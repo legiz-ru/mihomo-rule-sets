@@ -1,6 +1,6 @@
 # mihomo (clash-meta) rulesets
 
-## ru-bundle (with rk)
+## ru-bundle (with asn block)
 include: [itdoginfo-inside-russia](https://github.com/itdoginfo/allow-domains/) + [no-russia-hosts](https://github.com/dartraiden/no-russia-hosts) + [antifilter-community](https://community.antifilter.download/) + [rknasnblock](https://pastes.io/72-as?syntax=markdown)
 <details>
   <summary>how to add ↓ </summary>

@@ -49,7 +49,7 @@ proxy:domain:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bund
 ```
 
 ```shell
-proxy:ipcidr:86400:hhttps://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rknasnblock.mrs
+proxy:ipcidr:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rknasnblock.mrs
 ```
 
 </details>

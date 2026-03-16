@@ -286,3 +286,7 @@ payload:
  - PROCESS-NAME,com.tseh85
  - PROCESS-NAME,ru.plazius.cofix
  - PROCESS-NAME,com.avito.android
+ - PROCESS-NAME,ru.x5.omni
+ - PROCESS-NAME,ru.tele2.mytele2
+ - PROCESS-NAME,by.advasoft.android.troika.app
+ - PROCESS-NAME,com.octopod.russianpost.client.android

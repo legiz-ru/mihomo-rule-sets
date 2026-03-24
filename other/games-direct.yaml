@@ -15,6 +15,9 @@ payload:
   # BattleBit Remastered
   - PROCESS-NAME-REGEX,BattleBit.*
 
+  # Call of Duty
+  - PROCESS-NAME,ModernWarfare.exe
+
   # Content Warning
   - PROCESS-NAME,Content Warning.exe
 

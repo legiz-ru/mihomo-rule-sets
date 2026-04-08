@@ -48,13 +48,12 @@ jobs:
          echo "payload:" > no-russia-hosts.yaml && cat no-russia-hosts.lst | sed "s/.*/- '+.&'/" >> no-russia-hosts.yaml
          mihomo convert-ruleset domain yaml no-russia-hosts.yaml no-russia-hosts.mrs
          mv rule.yaml rule.mrs rule.list itdoginfo-inside-russia.yaml itdoginfo-inside-russia.mrs antifilter-community.yaml antifilter-community.mrs no-russia-hosts.yaml no-russia-hosts.mrs ru-bundle/
+
       - name: Generate RKN ASN Blocklist
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir -p ru-bundle
-          
-          # Список ASN из статьи
           cat <<EOF > asn_numbers.txt
           12876 174 14061 14544 16276 16509 16625 20054 20473 20860 21130 21859 24940 27458 
           29447 31898 32149 32810 9009 8849 1219 6142 51167 51765 53667 55170 56630 58061 
@@ -89,14 +88,10 @@ jobs:
           393398 393457 39351 394256 394869 395354 395717 396026 396073 396998 397032 
           397162 397373 397377 398343 398465 398478 398721 398823
           EOF
-
-          # Скачивание с использованием авторизации
           touch raw_ips.txt
           for asn in $(cat asn_numbers.txt); do
             curl -sL -H "Authorization: token $GH_TOKEN" "https://github.com/MetaCubeX/meta-rules-dat/raw/meta/asn/AS${asn}.list" >> raw_ips.txt || echo "Skip AS${asn}"
           done
-
-          # Исправленная агрегация через Python (разделяем v4 и v6)
           python3 -c "
           import ipaddress
           ipv4_nets = []
@@ -112,21 +107,15 @@ jobs:
                       else:
                           ipv6_nets.append(net)
                   except ValueError: continue
-          
           merged_v4 = ipaddress.collapse_addresses(ipv4_nets)
           merged_v6 = ipaddress.collapse_addresses(ipv6_nets)
-          
           with open('ru-bundle/rknasnblock.list', 'w') as out:
               for net in merged_v4:
                   out.write(str(net) + '\n')
               for net in merged_v6:
                   out.write(str(net) + '\n')
           "
-          
-          # Конвертация в binary ruleset (.mrs)
           mihomo convert-ruleset ipcidr text ru-bundle/rknasnblock.list ru-bundle/rknasnblock.mrs
-          
-          # Очистка временных файлов
           rm raw_ips.txt asn_numbers.txt
 
       - name: Generate re-filter
@@ -146,6 +135,7 @@ jobs:
          echo "payload:" > re-filter-ech.yaml && cat re-filter-ech.lst | sed "s/.*/- '+.&'/" >> re-filter-ech.yaml
          mihomo convert-ruleset domain yaml re-filter-ech.yaml re-filter-ech.mrs
          mv domain-rule.yaml domain-rule.mrs ip-rule.mrs re-filter-ech.yaml re-filter-ech.mrs re-filter-noech.yaml re-filter-noech.mrs re-filter/
+
       - name: Generate oisd
         env:
           NO_SKIP: true
@@ -168,24 +158,35 @@ jobs:
          mihomo convert-ruleset domain yaml nsfw_small.yaml nsfw_small.mrs
          mihomo convert-ruleset domain yaml small.yaml small.mrs
          mv big.yaml big.mrs nsfw.yaml nsfw.mrs nsfw_small.yaml nsfw_small.mrs small.yaml small.mrs oisd/
+
       - name: Generate other rulesets
         env:
           NO_SKIP: true
         run: |
-         mkdir -p other
-         curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-app-list.json | jq -r '.rules[].rules[].package_name[]' | sed 's/^/ - PROCESS-NAME,/' | sed '1i payload:' > other/ru-app-list.yaml
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/GhostRooter0953/discord-voice-ips/raw/master/voice_domains/discord-voice-ip-list -o discord-voice-ip-list.text
-         sed -i 's/$/\/32/' discord-voice-ip-list.text
-         mihomo convert-ruleset ipcidr text discord-voice-ip-list.text discord-voice-ip-list.mrs
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-websites.txt -o torrent-websites.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-trackers.txt -o torrent-trackers.txt
-         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/legiz-ru/sb-rule-sets/raw/main/torrent-clients.json -o torrent-clients.json
-         mihomo convert-ruleset domain text torrent-websites.txt torrent-websites.mrs
-         mihomo convert-ruleset domain text torrent-trackers.txt torrent-trackers.mrs
-         echo "payload:" > torrent-clients.yaml && \
-         jq -r '.rules[] | .rules[] | select(.process_name != null) | .process_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml && \
-         jq -r '.rules[] | .rules[] | select(.package_name != null) | .package_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml
-         mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs other/
+          mkdir -p other
+          # ru-app-list.yaml (формат PROCESS-NAME)
+          curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-app-list.json | jq -r '.rules[].rules[].package_name[]' | sed 's/^/  - PROCESS-NAME,/' | sed '1i payload:' > other/ru-app-list.yaml
+
+          # ru-app-list-tun.yaml (формат для TUN exclude-package)
+          curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://raw.githubusercontent.com/legiz-ru/sb-rule-sets/refs/heads/main/ru-app-list.json | \
+            jq -r '"tun:\n  exclude-package:" , (.rules[].rules[].package_name[] | "  - " + .)' > other/ru-app-list-tun.yaml
+
+          # Discord voice IPs
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/GhostRooter0953/discord-voice-ips/raw/master/voice_domains/discord-voice-ip-list -o discord-voice-ip-list.text
+          sed -i 's/$/\/32/' discord-voice-ip-list.text
+          mihomo convert-ruleset ipcidr text discord-voice-ip-list.text discord-voice-ip-list.mrs
+
+          # Torrent blocklists
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-websites.txt -o torrent-websites.txt
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://raw.githubusercontent.com/sakib-m/Pi-hole-Torrent-Blocklist/main/all-torrent-trackers.txt -o torrent-trackers.txt
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/legiz-ru/sb-rule-sets/raw/main/torrent-clients.json -o torrent-clients.json
+          mihomo convert-ruleset domain text torrent-websites.txt torrent-websites.mrs
+          mihomo convert-ruleset domain text torrent-trackers.txt torrent-trackers.mrs
+          echo "payload:" > torrent-clients.yaml && \
+          jq -r '.rules[] | .rules[] | select(.process_name != null) | .process_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml && \
+          jq -r '.rules[] | .rules[] | select(.package_name != null) | .package_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml
+          mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs other/
+
       - name: Generate v2ray templates for vpnbot
         env:
           NO_SKIP: true
@@ -194,6 +195,7 @@ jobs:
          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -L https://github.com/mercurykd/vpnbot/raw/dev/config/v2ray.json -o other/vpnbot-v2ray-ru-bundle.json
          domains=$(cat ru-bundle.lst | jq -R . | jq -s .) && jq --argjson domains "$domains" '(.routing.rules | to_entries | .[] | select(.value.outboundTag == "block").key + 1) as $idx | .routing.rules = .routing.rules[0:$idx] + [{"type": "field", "outboundTag": "~outbound~", "domain": $domains}] + .routing.rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > temp.json && mv temp.json other/vpnbot-v2ray-ru-bundle.json
          jq '.routing.rules as $rules | ($rules | to_entries | map(select(.value.outboundTag == "block" and .value.domain == "~block~")) | .[0].key + 1) as $idx | .routing.rules = $rules[0:$idx] + [{"type": "field", "outboundTag": "block", "domain": ["geosite:category-ads-all"]}] + $rules[$idx:]' other/vpnbot-v2ray-ru-bundle.json > other/vpnbot-v2ray-ru-bundle-category-ads-all.json
+
       - name: Generate v2ray templates for marzban
         env:
           NO_SKIP: true
@@ -202,12 +204,13 @@ jobs:
          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle-category-ads-all.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle-category-ads-all.json
          cp .github/workflows/v2ray-marzban-base-ios.json other/marzban-v2ray-ru-bundle.json
          domains=$(jq -R -s 'split("\n") | map(select(length > 0))' ru-bundle.lst) && jq --argjson added "$domains" '(.dns.servers[1].domains |= (if type=="string" then [.] else . end)) | (.dns.servers[1].domains += $added) | (.routing.rules |= map(if .domain then .domain |= (if type=="string" then [.] else . end) else . end)) | (.routing.rules |= map(if (.domain == ["domain:cloudflare-ech.com", "domain:cloudflare-dns.com", "domain:one.one.one.one"]) then .domain += $added else . end))' other/marzban-v2ray-ru-bundle.json > temp.json && mv temp.json other/marzban-v2ray-ru-bundle.json
+
       - name: Delete temp file
         run: |
-          rm ru-bundle.lst | rm re-filter-ip.text | rm re-filter-domain.text |  rm re-filter-ech.lst | rm re-filter-noech.lst
-          rm itdoginfo-inside-russia.lst | rm antifilter-community.lst | rm no-russia-hosts.json | rm no-russia-hosts.lst
-          rm oisd_big.txt | rm oisd_nsfw.txt | rm oisd_nsfw_small.txt | rm oisd_small.txt | rm discord-voice-ip-list.text
-          rm torrent-websites.txt | rm torrent-trackers.txt | rm torrent-clients.json | rm mihomo-linux-amd64-v1.19.9.deb
+          rm -f ru-bundle.lst re-filter-ip.text re-filter-domain.text re-filter-ech.lst re-filter-noech.lst \
+          itdoginfo-inside-russia.lst antifilter-community.lst no-russia-hosts.json no-russia-hosts.lst \
+          oisd_big.txt oisd_nsfw.txt oisd_nsfw_small.txt oisd_small.txt discord-voice-ip-list.text \
+          torrent-websites.txt torrent-trackers.txt torrent-clients.json mihomo-linux-amd64-v1.19.9.deb
           
       - name: Get current date
         id: date

@@ -44,6 +44,8 @@ payload:
   - PROCESS-NAME,com.tjuraniaapp
   - PROCESS-NAME,com.uip.gosuslugi2
   - PROCESS-NAME,com.vk.clips
+  - PROCESS-NAME,live.vkplay.app
+  - PROCESS-NAME,ru.mail.mailapp
   - PROCESS-NAME,com.vk.im
   - PROCESS-NAME,com.vk.vkvideo
   - PROCESS-NAME,com.wildberries.ru
@@ -143,6 +145,7 @@ payload:
   - PROCESS-NAME,ru.okbmei.gosservice
   - PROCESS-NAME,ru.ostrovok.android
   - PROCESS-NAME,ru.ozon.app.android
+  - PROCESS-NAME,ru.ozon.fintech.finance
   - PROCESS-NAME,ru.perekrestok.app
   - PROCESS-NAME,club.chizhik
   - PROCESS-NAME,ru.plus.bookmate
@@ -175,6 +178,8 @@ payload:
   - PROCESS-NAME,pro.rocketTech.rocket.rocketapp
   - PROCESS-NAME,ru.oneme.app
   - PROCESS-NAME,ru.start.androidmobile
+  - PROCESS-NAME,ru.bristol.bristol_app
+  - PROCESS-NAME,www.metro.com
   - PROCESS-NAME,ru.tander.magnit
   - PROCESS-NAME,ru.technokad.digitalkey
   - PROCESS-NAME,ru.tii.lkcomu

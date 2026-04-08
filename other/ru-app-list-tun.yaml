@@ -45,6 +45,8 @@ tun:
   - com.tjuraniaapp
   - com.uip.gosuslugi2
   - com.vk.clips
+  - live.vkplay.app
+  - ru.mail.mailapp
   - com.vk.im
   - com.vk.vkvideo
   - com.wildberries.ru
@@ -144,6 +146,7 @@ tun:
   - ru.okbmei.gosservice
   - ru.ostrovok.android
   - ru.ozon.app.android
+  - ru.ozon.fintech.finance
   - ru.perekrestok.app
   - club.chizhik
   - ru.plus.bookmate
@@ -176,6 +179,8 @@ tun:
   - pro.rocketTech.rocket.rocketapp
   - ru.oneme.app
   - ru.start.androidmobile
+  - ru.bristol.bristol_app
+  - www.metro.com
   - ru.tander.magnit
   - ru.technokad.digitalkey
   - ru.tii.lkcomu

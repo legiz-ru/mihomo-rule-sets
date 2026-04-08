@@ -55,8 +55,8 @@ proxy:ipcidr:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bund
 </details>
 </details>
 
-## oisd (adblocklists + nsfw)
-include all list from [oisd](oisd.nl)
+## oisd (adblocklists + nsfw) + m0zgen/bld-agregator
+include all list from [oisd](oisd.nl) & [m0zgen/bld-agregator](https://github.com/m0zgen/bld-agregator)
 <details>
   <summary>how to add ↓ </summary>
   
@@ -103,7 +103,15 @@ rule-providers:
     url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/nsfw.mrs
     path: ./oisd/nsfw_big.mrs
     interval: 86400
+  bld-agregator:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/bld-agregator.mrs
+    path: ./bld-agregator.mrs
+    interval: 86400
 rules:
+  - RULE-SET,bld-agregator,REJECT
   - RULE-SET,oisd_small,REJECT
   - RULE-SET,oisd_big,REJECT
   - RULE-SET,oisd_nsfw_small,REJECT
@@ -134,6 +142,11 @@ reject:domain:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/n
 
 ```shell
 reject:domain:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/nsfw_small.mrs
+```
+**m0zgen/bld-agregator:**
+
+```shell
+reject:domain:86400:https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/bld-agregator.mrs
 ```
 
 </details>

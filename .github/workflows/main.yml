@@ -130,7 +130,12 @@ jobs:
           echo "payload:" > torrent-clients.yaml && \
           jq -r '.rules[] | .rules[] | select(.process_name != null) | .process_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml && \
           jq -r '.rules[] | .rules[] | select(.package_name != null) | .package_name[] | "  - PROCESS-NAME," + .' torrent-clients.json >> torrent-clients.yaml
-          mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs other/
+          # bld-agregator blocklist
+          curl -sL "https://raw.githubusercontent.com/m0zgen/bld-agregator/refs/heads/data/blocklist.txt" -o bld-agregator.txt
+          grep -v '^\s*$' bld-agregator.txt | grep -v '^#' > bld-agregator-clean.txt
+          mihomo convert-ruleset domain text bld-agregator-clean.txt bld-agregator.mrs
+          rm bld-agregator.txt bld-agregator-clean.txt
+          mv torrent-websites.mrs torrent-trackers.mrs torrent-clients.yaml discord-voice-ip-list.mrs bld-agregator.mrs other/
 
       - name: Generate v2ray templates for vpnbot
         env:

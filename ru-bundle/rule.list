@@ -37,6 +37,7 @@
 +.adminforge.de
 +.adobe.com
 +.adobe.io
++.adobe.net
 +.ads-twitter.com
 +.adultmult.tv
 +.afcs.dellcdn.com
@@ -91,6 +92,7 @@
 +.ansible.com
 +.ansys.com
 +.anthropic.com
++.anthropic.qualtrics.com
 +.antizapret.prostovpn.org
 +.any.do
 +.anythingllm.com
@@ -147,8 +149,10 @@
 +.avira.com
 +.azathabar.com
 +.azattyq.org
++.babepedia.com
 +.babook.org
 +.bacch.com
++.backend-v2.crixet.com
 +.baginya.org
 +.baikal-journal.ru
 +.bard.google.com
@@ -232,7 +236,9 @@
 +.census.gov
 +.certifytheweb.com
 +.cesium.com
++.chainreactioncycles.com
 +.chaos.com
++.charhub.io
 +.chat.com
 +.chat.openai.com
 +.chat.openai.com.cdn.cloudflare.net
@@ -254,6 +260,7 @@
 +.clashofclans.com
 +.clashroyaleapp.com
 +.claude.ai
++.claude.com
 +.clevelandclinic.org
 +.clickup.com
 +.clip.opus.pro
@@ -308,6 +315,8 @@
 +.dailylviv.com
 +.danbooru.donmai.us
 +.darkproject.eu
++.dashboard.algolia.com
++.dashboard.gitguardian.com
 +.data-cdn.mbamupdates.com
 +.data.cline.bot
 +.database.clamav.net
@@ -389,11 +398,11 @@
 +.download.screamingfrog.co.uk
 +.download.wetransfer.com
 +.download3.omnissa.com
++.downloads.intercomcdn.com
 +.doxa.team
 +.doxajournal.ru
 +.dpidetector.org
 +.dreamhost.com
-+.dreamina.capcut.com
 +.dual-a-0001.a-msedge.net
 +.dub.sh
 +.ducati.com
@@ -453,6 +462,7 @@
 +.familysearch.org
 +.fanatical.com
 +.fansly.com
++.fapello.com
 +.fast-torrent.club
 +.fast.com
 +.fastflux.ai
@@ -476,6 +486,7 @@
 +.findagrave.com
 +.firefly-ps.adobe.io
 +.fitgirl-repacks.site
++.fivetran.com
 +.flashscore.com
 +.flexpool.io
 +.flibusta.is
@@ -564,8 +575,10 @@
 +.gnome-look.org
 +.godaddy.com
 +.gofile.io
++.gofund.me
 +.gofundme.com
 +.golosameriki.com
++.gonift.com
 +.gonitro.com
 +.goodreads.com
 +.google.com
@@ -587,6 +600,7 @@
 +.grazie.ai
 +.grizzlysms.com
 +.grok.com
++.grok.x.com
 +.groq.com
 +.groupon.com
 +.grouponcdn.com
@@ -638,6 +652,7 @@
 +.hromadske.ua
 +.hs.fi
 +.htmhell.dev
++.httptoolkit.com
 +.humblebundle.com
 +.hume.ai
 +.hybrid-analysis.com
@@ -653,6 +668,7 @@
 +.id.cisco.com
 +.idelreal.org
 +.iditelesombase.org
++.idolcomplex.com
 +.idtech.services
 +.iedb.org
 +.ig.me
@@ -687,6 +703,7 @@
 +.intellij.net
 +.intellipaat.com
 +.interactivebrokers.co.uk
++.intercom.io
 +.interfax.com.ua
 +.internalfb.com
 +.intuit.com
@@ -848,6 +865,7 @@
 +.medium.com
 +.meduza.io
 +.meest-shop.com
++.meetup.com
 +.mega.nz
 +.megapeer.ru
 +.megapeer.vip
@@ -893,6 +911,7 @@
 +.mrakopedia.net
 +.mssg.me
 +.mullvad.net
++.multisim.com
 +.multporn.net
 +.muscdn.com
 +.musical.ly
@@ -946,6 +965,7 @@
 +.nhentai.com
 +.nhentai.net
 +.nhl.com
++.ni.com
 +.nih.gov
 +.nike.com
 +.nippon.com
@@ -1057,6 +1077,7 @@
 +.periscope.tv
 +.peter-tanner.com
 +.pexels.com
++.philiascans.org
 +.philscomputerlab.com
 +.phishtank.com
 +.phncdn.com
@@ -1126,6 +1147,8 @@
 +.qaweb.dev
 +.qcad.org
 +.qobuz.com
++.qodana.cloud
++.qoder.com
 +.qt.io
 +.qualcomm.com
 +.quicknode.com
@@ -1230,6 +1253,9 @@
 +.salesforceiq.com
 +.salesforceliveagent.com
 +.samsclub.com
++.sankakuapi.com
++.sankakucomplex.com
++.sankakustatic.com
 +.sap.com
 +.saveeditonline.com
 +.saverudata.info
@@ -1237,6 +1263,7 @@
 +.sbom.sh
 +.schaeffler.com
 +.schenker-tech.de
++.schneider-electric.com
 +.sci-hub.se
 +.sci-hub.st
 +.scontent.cdninstagram.com
@@ -1259,6 +1286,7 @@
 +.scryde8.net
 +.scryde9.net
 +.sdxcentral.com
++.se.com
 +.searchfloor.org
 +.seasonvar.ru
 +.sebeanus.online
@@ -1284,6 +1312,7 @@
 +.severreal.org
 +.sfdcopens.com
 +.shikimori.me
++.shikimori.one
 +.shiksha.com
 +.shinyhardware.co.uk
 +.shiza-project.com
@@ -1370,6 +1399,7 @@
 +.strana.news
 +.strana.today
 +.strava.com
++.streamable.com
 +.studychat.app
 +.stuff.co.nz
 +.stulchik.net
@@ -1550,6 +1580,7 @@
 +.vectorworks.net
 +.veeam.com
 +.velocidrone.com
++.verificationacademy.com
 +.veritas.com
 +.verstka.media
 +.vesma.one
@@ -1589,6 +1620,7 @@
 +.walmart.com
 +.watchguard.com
 +.watermarkremover.io
++.wbagora.com
 +.wbgames.com
 +.wdfiles.com
 +.we.tl
@@ -1671,6 +1703,7 @@
 +.xnxx.net
 +.xnxx.tv
 +.xnxx3.com
++.xrite.com
 +.xsts.auth.xboxlive.com
 +.xtracloud.net
 +.xv-ru.com

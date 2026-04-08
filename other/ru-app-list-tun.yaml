@@ -5,6 +5,10 @@ tun:
   - com.bankffin.portfolio
   - com.bastion
   - com.bifit.rncbbeta
+  - ru.spb.parking
+  - com.whsd.whsdapp
+  - com.orgp.spbpodorozhnik
+  - ru.ftc.tc
   - com.carshering
   - com.citymobil
   - com.taxsee.taxsee
@@ -184,6 +188,7 @@ tun:
   - ru.tinkoff.sme
   - ru.troika.regional
   - ru.urentbike.app
+  - com.vkontakte.android
   - ru.vk.store
   - ru.vk.video
   - ru.vkmusic.audio

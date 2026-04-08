@@ -4,6 +4,10 @@ payload:
   - PROCESS-NAME,com.bankffin.portfolio
   - PROCESS-NAME,com.bastion
   - PROCESS-NAME,com.bifit.rncbbeta
+  - PROCESS-NAME,ru.spb.parking
+  - PROCESS-NAME,com.whsd.whsdapp
+  - PROCESS-NAME,com.orgp.spbpodorozhnik
+  - PROCESS-NAME,ru.ftc.tc
   - PROCESS-NAME,com.carshering
   - PROCESS-NAME,com.citymobil
   - PROCESS-NAME,com.taxsee.taxsee
@@ -183,6 +187,7 @@ payload:
   - PROCESS-NAME,ru.tinkoff.sme
   - PROCESS-NAME,ru.troika.regional
   - PROCESS-NAME,ru.urentbike.app
+  - PROCESS-NAME,com.vkontakte.android
   - PROCESS-NAME,ru.vk.store
   - PROCESS-NAME,ru.vk.video
   - PROCESS-NAME,ru.vkmusic.audio

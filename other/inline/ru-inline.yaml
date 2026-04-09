@@ -9,11 +9,11 @@ payload:
   - DOMAIN-SUFFIX,jivosite.com
   - DOMAIN-SUFFIX,vk.com
   - DOMAIN-SUFFIX,avira.com
-  - DOMAIN-SUFFIX,.ru
-  - DOMAIN-SUFFIX,.su
-  - DOMAIN-SUFFIX,.by
-  - DOMAIN-SUFFIX,.ru.com
-  - DOMAIN-SUFFIX,.ru.net
+  - DOMAIN-SUFFIX,ru
+  - DOMAIN-SUFFIX,su
+  - DOMAIN-SUFFIX,by
+  - DOMAIN-SUFFIX,ru.com
+  - DOMAIN-SUFFIX,ru.net
   - DOMAIN-SUFFIX,kudago.com
   - DOMAIN-SUFFIX,kinescope.io
   - DOMAIN-SUFFIX,redheadsound.studio

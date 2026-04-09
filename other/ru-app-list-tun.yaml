@@ -26,6 +26,7 @@ tun:
   - com.deliveryclub
   - com.discover.moscow.lite
   - com.edadeal.android
+  - com.ertelecom.agent
   - com.gnivts.ausn
   - com.gnivts.selfemployed
   - com.icemobile.lenta.prod
@@ -52,6 +53,8 @@ tun:
   - com.wildberries.ru
   - com.yandex.bank
   - com.yandex.bluecollars
+  - com.yandex.browser
+  - com.yandex.browser.lite
   - com.yandex.iot
   - com.yandex.lavka
   - com.yandex.mobile.drive

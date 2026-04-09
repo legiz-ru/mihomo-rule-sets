@@ -25,6 +25,7 @@ payload:
   - PROCESS-NAME,com.deliveryclub
   - PROCESS-NAME,com.discover.moscow.lite
   - PROCESS-NAME,com.edadeal.android
+  - PROCESS-NAME,com.ertelecom.agent
   - PROCESS-NAME,com.gnivts.ausn
   - PROCESS-NAME,com.gnivts.selfemployed
   - PROCESS-NAME,com.icemobile.lenta.prod
@@ -51,6 +52,8 @@ payload:
   - PROCESS-NAME,com.wildberries.ru
   - PROCESS-NAME,com.yandex.bank
   - PROCESS-NAME,com.yandex.bluecollars
+  - PROCESS-NAME,com.yandex.browser
+  - PROCESS-NAME,com.yandex.browser.lite
   - PROCESS-NAME,com.yandex.iot
   - PROCESS-NAME,com.yandex.lavka
   - PROCESS-NAME,com.yandex.mobile.drive

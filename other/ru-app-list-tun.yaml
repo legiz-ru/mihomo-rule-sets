@@ -26,6 +26,7 @@ tun:
   - com.deliveryclub
   - com.discover.moscow.lite
   - com.edadeal.android
+  - com.ertelecom.agent
   - com.gnivts.ausn
   - com.gnivts.selfemployed
   - com.icemobile.lenta.prod
@@ -50,8 +51,11 @@ tun:
   - com.vk.im
   - com.vk.vkvideo
   - com.wildberries.ru
+  - com.yandex.aliceapp
   - com.yandex.bank
   - com.yandex.bluecollars
+  - com.yandex.browser
+  - com.yandex.browser.lite
   - com.yandex.iot
   - com.yandex.lavka
   - com.yandex.mobile.drive
@@ -304,3 +308,4 @@ tun:
   - com.octopod.russianpost.client.android
   - ru.dahl.messenger
   - ru.dns.shop.android
+  - to.boosty.android

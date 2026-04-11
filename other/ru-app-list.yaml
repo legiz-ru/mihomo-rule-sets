@@ -48,7 +48,10 @@ payload:
   - PROCESS-NAME,ru.mail.mailapp
   - PROCESS-NAME,com.vk.im
   - PROCESS-NAME,com.vk.vkvideo
+  - PROCESS-NAME,com.uma.musicvk
   - PROCESS-NAME,com.wildberries.ru
+  - PROCESS-NAME,ru.zen.android
+  - PROCESS-NAME,com.yandex.browser
   - PROCESS-NAME,com.yandex.bank
   - PROCESS-NAME,com.yandex.bluecollars
   - PROCESS-NAME,com.yandex.iot
@@ -303,3 +306,6 @@ payload:
   - PROCESS-NAME,com.octopod.russianpost.client.android
   - PROCESS-NAME,ru.dahl.messenger
   - PROCESS-NAME,ru.dns.shop.android
+  - PROCESS-NAME,com.evrasiar
+  - PROCESS-NAME,com.loyaltyplant.partner.subway
+  - PROCESS-NAME,ru.reksoft.okey

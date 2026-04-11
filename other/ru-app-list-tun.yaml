@@ -49,7 +49,10 @@ tun:
   - ru.mail.mailapp
   - com.vk.im
   - com.vk.vkvideo
+  - com.uma.musicvk
   - com.wildberries.ru
+  - ru.zen.android
+  - com.yandex.browser
   - com.yandex.bank
   - com.yandex.bluecollars
   - com.yandex.iot
@@ -304,3 +307,6 @@ tun:
   - com.octopod.russianpost.client.android
   - ru.dahl.messenger
   - ru.dns.shop.android
+  - com.evrasiar
+  - com.loyaltyplant.partner.subway
+  - ru.reksoft.okey

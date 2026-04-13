@@ -166,10 +166,33 @@ jobs:
           mihomo convert-ruleset ipcidr text other/wli.list other/wli.mrs
           mihomo convert-ruleset domain text other/wld.list other/wld.mrs
 
+      - name: Generate category-ban-ru
+        run: |
+          mkdir -p other
+          # Reuse antifilter-community.lst (from Generate ru-bundle step)
+          # and re-filter-domain.text (from Generate re-filter step).
+          # Apply the same TLD filter as frayZV/simple-ru-geosite, add custom domains,
+          # then prepend +. for Mihomo domain-suffix format.
+          CUSTOM_DOMAINS="jut.su habr.com 4pda.to"
+          (
+            cat antifilter-community.lst re-filter-domain.text \
+              | grep -E '\.(ru|su|xn--80adxhks|xn--80asehdb|xn--80aswg|xn--c1avg|xn--d1acj3b|xn--p1acf|xn--p1ai)$'
+            echo "${CUSTOM_DOMAINS// /$'\n'}"
+          ) | sort | uniq | sed 's/^/+\./' > other/category-ban-ru.list
+          mihomo convert-ruleset domain text other/category-ban-ru.list other/category-ban-ru.mrs
+
       - name: Generate examples/remnawave_prod_rubundle.yaml
         run: |
           mkdir -p examples
           python3 .github/workflows/gen_rubundle.py
+
+      - name: Generate examples/remnawave_prod_fullproxy_without_ru.yaml
+        run: |
+          mkdir -p examples
+          python3 .github/workflows/gen_rubundle.py \
+            .github/base/remnawave_prod_fullproxy_without_ru_base.yaml \
+            other/ru-app-list-tun.yaml \
+            examples/remnawave_prod_fullproxy_without_ru.yaml
 
       - name: Delete temp file
         run: |

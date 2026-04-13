@@ -1,0 +1,278 @@
+remnawave:
+  includeHiddenHosts: false
+
+tcp-concurrent: true
+enable-process: true
+find-process-mode: always
+mode: rule
+log-level: info
+ipv6: false
+keep-alive-interval: 30
+unified-delay: true
+profile:
+  store-selected: true
+  store-fake-ip: true
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  sniff:
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+    TLS:
+      ports:
+        - 443
+        - 8443
+    QUIC:
+      ports:
+        - 443
+tun:
+  enable: true
+  stack: gvisor
+  auto-route: true
+  auto-detect-interface: false
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  strict-route: true
+  mtu: 1500
+  route-exclude-address:
+    # Не пускаем адреса (служебные, приватные) в TUN
+    - 0.0.0.0/8
+    - 10.0.0.0/8
+    - 100.64.0.0/10
+    - 127.0.0.0/8
+    - 169.254.0.0/16
+    - 172.16.0.0/12
+    - 192.0.0.0/24
+    - 192.0.2.0/24
+    - 192.88.99.0/24
+    - 192.168.0.0/16
+    - 198.51.100.0/24
+    - 203.0.113.0/24
+    - 224.0.0.0/3
+    - ::/127
+    - fc00::/7
+    - fe80::/10
+    - ff00::/8
+dns:
+  enable: true
+  prefer-h3: true
+  use-hosts: true
+  use-system-hosts: true
+  listen: 127.0.0.1:6868
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - rule-set:geosite-private
+    - "*.lan"
+    - "*.msftncsi.com"
+  default-nameserver:
+    - tls://77.88.8.8
+  proxy-server-nameserver:
+    - tls://77.88.8.8
+  direct-nameserver:
+    - tls://77.88.8.8
+  nameserver:
+    - https://cloudflare-dns.com/dns-query
+  nameserver-policy:
+    rule-set:ads-all:
+      - rcode://refused
+    rule-set:apps_ipcheck,youtube,telegram_domains,discord_domains,ru-bundle,if:
+      - https://194.242.2.2/dns-query#🌍 VPN
+      #- https://1.1.1.1/dns-query#🌍 VPN
+      #- https://1.0.0.1/dns-query#🌍 VPN
+    
+
+proxies: # LEAVE THIS LINE!
+
+proxy-groups:
+  - name: 🌍 VPN
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hijacking.png
+    type: select
+    proxies:
+      - ⚡️ Fastest
+      # LEAVE THIS LINE!
+  - name: ▶️ YouTube
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png
+    type: select
+    proxies:
+      - 🌍 VPN
+      # LEAVE THIS LINE!
+  - name: ⚡️ Fastest
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Auto.png
+    type: url-test
+    lazy: true
+    tolerance: 150
+    url: https://captive.apple.com/generate_204
+    interval: 300
+    proxies:
+      # LEAVE THIS LINE!
+  - name: ♻️ БезVPN
+    icon: https://cdn.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Direct.png
+    remnawave: 
+      include-proxies: false
+    type: select
+    hidden: true
+    proxies:
+      - DIRECT
+
+
+rule-providers:
+  geosite-private:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs
+    path: ./rule-sets/geosite-private.mrs
+    interval: 86400
+    proxy: 🌍 VPN
+  whatsapp_domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/whatsapp.mrs
+    path: ./rule-sets/whatsapp_domains.mrs
+    proxy: 🌍 VPN
+  meta_ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/facebook.mrs
+    path: ./rule-sets/meta_ips.mrs
+    proxy: 🌍 VPN
+  telegram_domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/telegram.mrs
+    path: ./rule-sets/telegram_domains.mrs
+    proxy: 🌍 VPN
+  telegram_ips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/telegram.mrs
+    path: ./rule-sets/telegram_ips.mrs
+    proxy: 🌍 VPN
+  discord_domains:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/discord.mrs
+    path: ./rule-sets/discord_domains.mrs
+    proxy: 🌍 VPN
+  discord_voiceips:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/other/discord-voice-ip-list.mrs
+    path: ./rule-sets/discord_voiceips.mrs
+    proxy: 🌍 VPN
+  # refilter_domains:
+  #   type: http
+  #   behavior: domain
+  #   format: mrs
+  #   url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/re-filter/domain-rule.mrs
+  #   path: ./re-filter/domain-rule.mrs
+  #   interval: 86400
+  #   proxy: 🌍 VPN
+  # refilter_ipsum:
+  #   type: http
+  #   behavior: ipcidr
+  #   format: mrs
+  #   url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/re-filter/ip-rule.mrs
+  #   path: ./re-filter/ip-rule.mrs
+  #   interval: 86400
+  #   proxy: 🌍 VPN
+  youtube:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/youtube.mrs
+    path: ./rule-sets/youtube.mrs
+    proxy: 🌍 VPN
+  cloudflare:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geoip/cloudflare.mrs
+    path: ./rule-sets/cloudflare.mrs
+    proxy: 🌍 VPN
+  ads-all:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://github.com/MetaCubeX/meta-rules-dat/raw/meta/geo/geosite/category-ads-all.mrs
+    path: ./ads-all.mrs
+    proxy: 🌍 VPN
+  torrent-trackers:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/other/torrent-trackers.mrs
+    path: ./rule-sets/torrent-trackers.mrs
+    interval: 86400
+    proxy: 🌍 VPN
+  torrent-clients:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/other/torrent-clients.yaml
+    path: ./rule-sets/torrent-clients.yaml
+    interval: 86400
+    proxy: 🌍 VPN
+  ru-app-list:
+    type: http
+    behavior: classical
+    format: yaml
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/ru-app-list.yaml
+    path: ./rule-sets/ru-app-list.yaml
+    interval: 86400
+    proxy: 🌍 VPN
+  ru-bundle:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/ru-bundle/rule.mrs
+    path: ./ru-bundle/rule.mrs
+    interval: 86400
+    proxy: 🌍 VPN
+  rknasnblock:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/ru-bundle/rknasnblock.mrs
+    path: ./ru-bundle/rknasnblock.mrs
+    interval: 86400
+    proxy: 🌍 VPN
+  apps_ipcheck:
+    type: inline
+    payload:
+      - DOMAIN,ipwho.is
+      - DOMAIN,api.ip.sb
+      - DOMAIN,ipapi.co
+      - DOMAIN,ipinfo.io
+      - DOMAIN,ip-api.com
+    behavior: classical
+
+rules:
+  - RULE-SET,apps_ipcheck,🌍 VPN
+  - RULE-SET,ads-all,REJECT # Блокировка рекламы, трекинга и тд
+  - RULE-SET,ru-app-list,♻️ БезVPN # Российские приложения полностью без прокси
+  - OR,((RULE-SET,torrent-clients),(RULE-SET,torrent-trackers)),♻️ БезVPN # Принудительное директирование торрент трекеров и приложений
+  - RULE-SET,youtube,▶️ YouTube 
+  - OR,((RULE-SET,whatsapp_domains),(RULE-SET,meta_ips)),🌍 VPN
+  - OR,((RULE-SET,telegram_domains),(RULE-SET,telegram_ips)),🌍 VPN
+  - OR,((RULE-SET,discord_domains),(RULE-SET,discord_voiceips)),🌍 VPN
+  - OR,((PROCESS-NAME,Discord.exe),(PROCESS-NAME,org.cromite.cromite)),🌍 VPN
+  - RULE-SET,ru-bundle,🌍 VPN
+  # - RULE-SET,refilter_domains,🌍 VPN
+  # - RULE-SET,refilter_ipsum,🌍 VPN
+  - RULE-SET,cloudflare,🌍 VPN
+  - RULE-SET,rknasnblock,🌍 VPN
+  - MATCH,♻️ БезVPN

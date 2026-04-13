@@ -166,6 +166,11 @@ jobs:
           mihomo convert-ruleset ipcidr text other/wli.list other/wli.mrs
           mihomo convert-ruleset domain text other/wld.list other/wld.mrs
 
+      - name: Generate examples/remnawave_prod_rubundle.yaml
+        run: |
+          mkdir -p examples
+          python3 .github/workflows/gen_rubundle.py
+
       - name: Delete temp file
         run: |
           rm -f ru-bundle.lst re-filter-ip.text re-filter-domain.text re-filter-ech.lst re-filter-noech.lst \

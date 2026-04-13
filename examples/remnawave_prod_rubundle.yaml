@@ -166,6 +166,10 @@ rule-providers:
     <<: *rp_classical
     url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@main/other/torrent-clients.yaml
     path: ./rule-sets/torrent-clients.yaml
+  games-direct:
+    <<: *rp_classical
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/games-direct.yaml
+    path: ./rule-sets/games-direct.yaml
   ru-app-list:
     <<: *rp_classical
     url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/ru-app-list.yaml
@@ -225,6 +229,7 @@ rules:
   - RULE-SET,ads-all,REJECT
   - RULE-SET,ru-app-list,♻️ БезVPN
   - OR,((RULE-SET,torrent-clients),(RULE-SET,torrent-trackers)),♻️ БезVPN
+  - RULE-SET,games-direct,♻️ БезVPN
   - RULE-SET,youtube,▶️ YouTube
   - OR,((RULE-SET,whatsapp_domains),(RULE-SET,meta_ips)),🌍 VPN
   - OR,((RULE-SET,telegram_domains),(RULE-SET,telegram_ips)),🌍 VPN

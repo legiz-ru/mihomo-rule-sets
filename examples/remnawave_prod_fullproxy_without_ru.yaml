@@ -204,6 +204,10 @@ rule-providers:
     <<: *rp_classical
     url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/ru-app-list.yaml
     path: ./rule-sets/ru-app-list.yaml
+  games-direct:
+    <<: *rp_classical
+    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/other/games-direct.yaml
+    path: ./rule-sets/games-direct.yaml
   geosite-ru:
     <<: *rp_domain
     url: https://raw.githubusercontent.com/Davoyan/mihomo-rule-sets/main/rules/category-ru.mrs
@@ -223,6 +227,7 @@ rules:
   - RULE-SET,geoip-private,♻️ БезVPN,no-resolve
   - OR,((RULE-SET,torrent-clients),(RULE-SET,torrent-trackers)),♻️ БезVPN
   - RULE-SET,ru-app-list,♻️ БезVPN
+  - RULE-SET,games-direct,♻️ БезVPN
   - RULE-SET,youtube,▶️ YouTube
   - RULE-SET,category-ban-ru,🌍 VPN
   - OR,((RULE-SET,whatsapp_domains),(RULE-SET,meta_ips)),🌍 VPN

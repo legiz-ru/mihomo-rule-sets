@@ -26,14 +26,6 @@ sniffer:
         - 443
         - 8443
 tun:
-  enable: true
-  stack: mixed
-  auto-route: true
-  auto-detect-interface: true
-  dns-hijack:
-    - any:53
-  strict-route: true
-  mtu: 1500
   exclude-package:
   - az.vtb.android
   - business.gid.hero
@@ -563,6 +555,14 @@ tun:
   - com.evrasiar
   - com.loyaltyplant.partner.subway
   - ru.reksoft.okey
+  enable: true
+  stack: mixed
+  auto-route: true
+  auto-detect-interface: true
+  dns-hijack:
+    - any:53
+  strict-route: true
+  mtu: 1500
 dns:
   enable: true
   prefer-h3: true

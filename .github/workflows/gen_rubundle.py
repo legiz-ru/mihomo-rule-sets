@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
 """
-Generates examples/remnawave_prod_rubundle.yaml by merging the base template
-with the tun exclude-package list from other/ru-app-list-tun.yaml.
-"""
+Generates a Mihomo example config by merging a base template with
+the tun exclude-package list from other/ru-app-list-tun.yaml.
 
-base_path = '.github/base/remnawave_prod_rubundle_base.yaml'
-tun_path = 'other/ru-app-list-tun.yaml'
-out_path = 'examples/remnawave_prod_rubundle.yaml'
+Usage:
+  gen_rubundle.py                          # defaults for remnawave_prod_rubundle.yaml
+  gen_rubundle.py <base> <tun> <output>   # custom paths
+"""
+import sys
+
+if len(sys.argv) == 4:
+    base_path, tun_path, out_path = sys.argv[1], sys.argv[2], sys.argv[3]
+else:
+    base_path = '.github/base/remnawave_prod_rubundle_base.yaml'
+    tun_path  = 'other/ru-app-list-tun.yaml'
+    out_path  = 'examples/remnawave_prod_rubundle.yaml'
 
 with open(base_path) as f:
     base_lines = f.readlines()

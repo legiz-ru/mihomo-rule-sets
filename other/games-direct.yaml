@@ -143,7 +143,6 @@ payload:
 
   # HoYoverse
   - PROCESS-NAME,GenshinImpact.exe
-  - PROCESS-NAME,ZenlessZoneZero.exe
   - PROCESS-NAME,StarRail.exe
   - PROCESS-NAME,BH3.exe
   - PROCESS-NAME,ZFGameBrowser.exe # In-game webview

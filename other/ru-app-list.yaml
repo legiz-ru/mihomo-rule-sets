@@ -289,6 +289,7 @@ payload:
   - PROCESS-NAME,ru.alfabank.mobile.android
   - PROCESS-NAME,ru.alfabank.oavdo.amc
   - PROCESS-NAME,ru.alfadirect.app
+  - PROCESS-NAME,ru.alfastrah.app
   - PROCESS-NAME,ru.aliexpress.buyer
   - PROCESS-NAME,ru.altarix.mos.pgu
   - PROCESS-NAME,ru.auto.ara
@@ -393,6 +394,7 @@ payload:
   - PROCESS-NAME,ru.sberbankmobile
   - PROCESS-NAME,ru.sberins.insureapp.android
   - PROCESS-NAME,ru.sbermegamarket.pro
+  - PROCESS-NAME,ru.bankuralsib.mb.android
   - PROCESS-NAME,ru.sovcombank.dms
   - PROCESS-NAME,ru.sovcombank.investor
   - PROCESS-NAME,ru.sovcomcard.halva.v1

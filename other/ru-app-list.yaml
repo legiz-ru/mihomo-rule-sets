@@ -529,3 +529,6 @@ payload:
   - PROCESS-NAME,com.evrasiar
   - PROCESS-NAME,com.loyaltyplant.partner.subway
   - PROCESS-NAME,ru.reksoft.okey
+  - PROCESS-NAME,com.vtosters.lite
+  - PROCESS-NAME,ua.itaysonlab.vkx
+  - PROCESS-NAME,com.perm.kate

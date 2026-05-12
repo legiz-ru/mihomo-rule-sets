@@ -42,6 +42,8 @@ payload:
   - DOMAIN-SUFFIX,rzd.ru
   - DOMAIN-SUFFIX,sber.ru
   - DOMAIN-SUFFIX,sberbank.ru
+  - DOMAIN-SUFFIX,sirius.online
+  - DOMAIN-SUFFIX,sochisirius.ru
   - DOMAIN-SUFFIX,t2.ru
   - DOMAIN-SUFFIX,taximaxim.ru
   - DOMAIN-SUFFIX,tbank.ru

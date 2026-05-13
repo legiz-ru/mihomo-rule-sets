@@ -68,6 +68,9 @@ payload:
   # Half-Life 2
   - PROCESS-NAME,hl2.exe
 
+  # Garry's mod x86/x64
+  - PROCESS-NAME,gmod.exe
+  
   # Rainbow Six Siege
   - PROCESS-NAME,RainbowSix.exe
 

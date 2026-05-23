@@ -174,3 +174,4 @@ payload:
 
   # Steam
   - steam.exe
+  - steamwebhelper.exe

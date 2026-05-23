@@ -171,3 +171,6 @@ payload:
 
   # MIMESIS
   - PROCESS-NAME,MIMESIS.exe
+
+  # Steam
+  - steam.exe

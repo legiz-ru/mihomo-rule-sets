@@ -11,32 +11,39 @@ payload:
   - DOMAIN-SUFFIX,cdn-vk.ru
   - DOMAIN-SUFFIX,cikrf.ru
   - DOMAIN-SUFFIX,digital.gov.ru
+  - DOMAIN-SUFFIX,dobro.ru
   - DOMAIN-SUFFIX,duma.gov.ru
   - DOMAIN-SUFFIX,dzen.ru
+  - DOMAIN-SUFFIX,evotor.ru
   - DOMAIN-SUFFIX,gazeta.ru
   - DOMAIN-SUFFIX,genproc.gov.ru
   - DOMAIN-SUFFIX,gosuslugi.ru
   - DOMAIN-SUFFIX,government.ru
   - DOMAIN-SUFFIX,gu-st.ru
+  - DOMAIN-SUFFIX,hrlink.ru
   - DOMAIN-SUFFIX,izbirkom.ru
   - DOMAIN-SUFFIX,kinopoisk.ru
   - DOMAIN-SUFFIX,kp.ru
   - DOMAIN-SUFFIX,kremlin.ru
   - DOMAIN-SUFFIX,lemanapro.ru
   - DOMAIN-SUFFIX,lenta.ru
+  - DOMAIN-SUFFIX,lizaalert.org
   - DOMAIN-SUFFIX,lmru.tech
   - DOMAIN-SUFFIX,mail.ru
   - DOMAIN-SUFFIX,max.ru
   - DOMAIN-SUFFIX,mradx.net
+  - DOMAIN-SUFFIX,ofd.ru
   - DOMAIN-SUFFIX,ok.ru
   - DOMAIN-SUFFIX,okcdn.ru
   - DOMAIN-SUFFIX,oneme.ru
+  - DOMAIN-SUFFIX,onf.ru
   - DOMAIN-SUFFIX,ozon.ru
   - DOMAIN-SUFFIX,ozone.ru
   - DOMAIN-SUFFIX,pochta.ru
   - DOMAIN-SUFFIX,rambler.ru
   - DOMAIN-SUFFIX,rbc.ru
   - DOMAIN-SUFFIX,res-nsdi.ru
+  - DOMAIN-SUFFIX,roskachestvo.gov.ru
   - DOMAIN-SUFFIX,rutube.ru
   - DOMAIN-SUFFIX,rutubelist.ru
   - DOMAIN-SUFFIX,rzd.ru

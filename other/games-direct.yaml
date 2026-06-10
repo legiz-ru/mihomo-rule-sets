@@ -99,8 +99,6 @@ payload:
   - PROCESS-NAME,vgc.exe  # Vanguard Anti-Cheat (Valorant, League of Legends)
   - PROCESS-NAME,vgm.exe # Vanguard Anti-Cheat (Valorant, League of Legends)
   - PROCESS-NAME,EasyAntiCheat.exe
-  - PROCESS-NAME,denuvo-anti-cheat-update-service.exe  # DENUVO Anticheat
-  - DOMAIN-SUFFIX,codefusion.technology  # DENUVO Anticheat
   - PROCESS-NAME,EscapeFromTarkovArena_BE.exe # Escape From Tarkov - Arena Battle Eye Anticheat
   - PROCESS-NAME,EscapeFromTarkov_BE.exe # Escape From Tarkov Battle Eye Anticheat
   - PROCESS-NAME,EasyAntiCheat_EOS.exe # Hunt: Showdown Easy Anti-Cheat

@@ -173,5 +173,5 @@ payload:
   - PROCESS-NAME,MIMESIS.exe
 
   # Steam
-  - steam.exe
-  - steamwebhelper.exe
+  - PROCESS-NAME,steam.exe
+  - PROCESS-NAME,steamwebhelper.exe

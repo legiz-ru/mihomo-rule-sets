@@ -33,6 +33,7 @@
 +.adafruit.com
 +.adam-audio.com
 +.adblockplus.org
++.adguard-vpn.com
 +.adguard.com
 +.adidas.com
 +.adminforge.de
@@ -321,6 +322,9 @@
 +.csskor.ill.in.ua
 +.cub.red
 +.currenttime.tv
++.cursor-cdn.com
++.cursor.sh
++.cursorapi.com
 +.cursorinfo.co.il
 +.cvedetails.com
 +.cyberghostvpn.com
@@ -471,6 +475,7 @@
 +.etsy.com
 +.eu-iot-prod.aws.tcljd.com
 +.euronews.com
++.europesays.com
 +.euroradio.fm
 +.eutrp.eu
 +.event.on24.com
@@ -546,7 +551,12 @@
 +.fotoforensics.com
 +.foxnews.com
 +.foxtrot.com.ua
++.framer.app
 +.framer.com
++.framercanvas.com
++.framercdn.com
++.framerstatic.com
++.framerusercontent.com
 +.freecodecamp.org
 +.freediscussions.com
 +.freedomletters.org
@@ -713,6 +723,7 @@
 +.images.discordapp.net
 +.imgur.com
 +.important-stories.com
++.incy.cc
 +.indeed.com
 +.indiehackers.com
 +.infineon.com
@@ -900,6 +911,7 @@
 +.jetbrains.ai
 +.jetbrains.com
 +.jetbrains.space
++.jetbrains.team
 +.jnn-pa.googleapis.com
 +.joesandbox.com
 +.joyreactor.cc
@@ -907,8 +919,6 @@
 +.jskor.ill.in.ua
 +.jut-su.net
 +.jut.su
-+.jw-russia.org
-+.jw.org
 +.kaktus.media
 +.kaleido.ai
 +.kamatera.com
@@ -1021,6 +1031,7 @@
 +.malw.link
 +.malwarebytes.com
 +.malwarebytes.org
++.manga-chan.me
 +.mangadex.org
 +.mangahub.ru
 +.mangapark.net
@@ -1076,6 +1087,7 @@
 +.mintmobile.com
 +.miracleptr.wordpress.com
 +.mixcloud.com
++.mmcdn.com
 +.mobile.events.data.microsoft.com
 +.modrinth.com
 +.moneypuck.com
@@ -1249,6 +1261,7 @@
 +.patriot.dp.ua
 +.pay.buckaroo.nl
 +.paypal.com
++.paywithmoon.com
 +.pb.wtf
 +.pbs.twimg.com
 +.pcbway.com
@@ -1505,6 +1518,8 @@
 +.setapp.com
 +.severreal.org
 +.sfdcopens.com
++.sharefile.com
++.sharefile.io
 +.shikimori.me
 +.shikimori.one
 +.shiksha.com
@@ -1519,6 +1534,7 @@
 +.siemens-home.bsh-group.com
 +.siemens.com
 +.signal.org
++.sigsauer.com
 +.simplex.chat
 +.simplex.im
 +.simplix.info
@@ -1624,6 +1640,7 @@
 +.syncfusion.com
 +.synoforum.com
 +.sysdig.com
++.syslog-ng.com
 +.systemtek.co.uk
 +.t-invariant.org
 +.t.co
@@ -1666,6 +1683,7 @@
 +.thetvdb.com
 +.thinkpads.com
 +.thomas-krenn.com
++.threads.com
 +.threads.net
 +.threema.ch
 +.ti.com

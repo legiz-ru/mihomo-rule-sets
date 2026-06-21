@@ -166,3 +166,9 @@ payload:
 
   # MIMESIS
   - PROCESS-NAME,MIMESIS.exe
+
+  # Roblox
+  - PROCESS-NAME,RobloxPlayerLauncher.exe # Launcher
+  - PROCESS-NAME,RobloxPlayerBeta.exe # Roblox client
+  - PROCESS-NAME,RobloxStudioLauncherBeta.exe # Studio Launcher
+  - PROCESS-NAME,RobloxStudioBeta.exe # Roblox Studio

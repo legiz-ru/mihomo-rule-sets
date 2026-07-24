@@ -21,6 +21,7 @@ payload:
   - DOMAIN-SUFFIX,government.ru
   - DOMAIN-SUFFIX,gu-st.ru
   - DOMAIN-SUFFIX,hrlink.ru
+  - DOMAIN-SUFFIX,imgsmail.ru
   - DOMAIN-SUFFIX,izbirkom.ru
   - DOMAIN-SUFFIX,kinopoisk.ru
   - DOMAIN-SUFFIX,kp.ru
@@ -51,6 +52,7 @@ payload:
   - DOMAIN-SUFFIX,sberbank.ru
   - DOMAIN-SUFFIX,sirius.online
   - DOMAIN-SUFFIX,sochisirius.ru
+  - DOMAIN-SUFFIX,sportmail.ru
   - DOMAIN-SUFFIX,t2.ru
   - DOMAIN-SUFFIX,taximaxim.ru
   - DOMAIN-SUFFIX,tbank.ru

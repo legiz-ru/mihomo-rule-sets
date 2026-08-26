@@ -21,6 +21,10 @@ payload:
   # Counter-Strike 2
   - PROCESS-NAME,cs2.exe
 
+  # Counter-Strike: Source
+  - PROCESS-NAME,cstrike.exe
+  - PROCESS-NAME,cstrike_win64.exe
+
   # Euro Truck Simulator 2 / American Trucks Simulator
   - PROCESS-NAME,eurotrucks2.exe
   - PROCESS-NAME,amtrucks.exe
@@ -166,3 +170,7 @@ payload:
 
   # MIMESIS
   - PROCESS-NAME,MIMESIS.exe
+
+  # STALCRAFT
+  - PROCESS-NAME,stalcraftw.exe
+  - PROCESS-NAME,ExensLauncher.exe

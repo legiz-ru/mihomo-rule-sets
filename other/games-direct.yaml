@@ -78,7 +78,12 @@ payload:
   - PROCESS-NAME,Quaver.exe
 
   # Valorant
-  - PROCESS-NAME,VALORANT-Win64-Shipping.exe
+  - PROCESS-NAME,VALORANT-Win64-Shipping.exe         # Game
+  - PROCESS-NAME,VALORANT.exe                        # VALORANT Launcher
+  - PROCESS-NAME,RiotClientservices.exe              # Riot Customer Service
+  - DST-PORT,2099,5222-5223,8088,8393-8400,8443,8446 # TCP: PVP.Net (2099,5222-5223), Installer/Maestro (8393-8400), Vanguard (8443), Client connections (8446)
+  - DST-PORT,5000-5500,8088,8180-8181                # UDP: Game client (5000-5500), Spectator (8088), Voice chat (8180-8181)
+  - DST-PORT,7000-8000,27016-27024,54000-54012       # UDP: Additional game traffic (7000-8000), Server connections (27016-27024, 54000-54012)
 
   # Escape from Tarkov
   - PROCESS-NAME,BsgLauncher.exe # EFT Launcher

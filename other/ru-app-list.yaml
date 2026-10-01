@@ -1,4 +1,5 @@
 payload:
+  - PROCESS-NAME,ru.aeroflot
   - PROCESS-NAME,az.vtb.android
   - PROCESS-NAME,business.gid.hero
   - PROCESS-NAME,business.gid.universe

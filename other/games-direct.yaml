@@ -166,3 +166,6 @@ payload:
 
   # MIMESIS
   - PROCESS-NAME,MIMESIS.exe
+
+  # AstrumPlay
+  - PROCESS-NAME-REGEX,(?i)^AstrumPlay

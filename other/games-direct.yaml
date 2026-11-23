@@ -169,8 +169,3 @@ payload:
 
   # AstrumPlay
   - PROCESS-NAME-REGEX,(?i)^AstrumPlay
-
-   # Warframe 
-  - PROCESS-NAME,Warframe.x64.exe,DIRECT
-  - PROCESS-NAME,Warframe.exe,DIRECT
-  
